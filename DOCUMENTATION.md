@@ -106,6 +106,12 @@
 - Correção: Criado `src/vite-env.d.ts` com tipagens
 - Tentativa 2: ✅ Build concluído com sucesso
 
+**Commit realizado:**
+```
+feat: estrutura base do projeto (PROMPT 1) - Vite, React, TypeScript, Tailwind, React Router e tipos
+Hash: fe8a874
+```
+
 ---
 
 ### 🎨 PROMPT 2: Sistema de Layout e Navegação Desktop
