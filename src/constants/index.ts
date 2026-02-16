@@ -15,10 +15,10 @@ export const ROUTES = {
 /**
  * Breakpoints de responsividade
  */
+/** Breakpoints oficiais do projeto (mobile-first). Alinhado ao tailwind: md 768px, lg 1280px, xl 1920px. */
 export const BREAKPOINTS = {
-  MOBILE: 640,
   TABLET: 768,
-  DESKTOP: 1024,
+  DESKTOP: 1280,
   WIDE: 1920,
 } as const
 

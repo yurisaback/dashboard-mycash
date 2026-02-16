@@ -40,6 +40,57 @@
   --red-500: #EF4444; /* Perigo/despesa */
   
   /* ============================================
+     TOKENS FIGMA MCP (Design System oficial)
+     ============================================ */
+  
+  /* Colors/Primary */
+  --primary-500: #DFFE35; /* Lime - item ativo sidebar */
+  --primary-700: #9EB426;
+  
+  /* Colors/Secondary */
+  --secondary-900: #070A10; /* Texto sobre fundo primary (item ativo) */
+  --secondary-50: #E7E8E9; /* Fundo botão collapse */
+  
+  /* Colors/Surface */
+  --surface-500: #FFFFFF; /* Fundo sidebar */
+  
+  /* color/neutral */
+  --neutral-0: #ffffff;
+  --neutral-300: #e5e7eb; /* Bordas */
+  --neutral-400: #d1d5db;
+  --neutral-500: #9ca3af; /* Texto inativo */
+  --neutral-1100: #080b12; /* Texto escuro */
+  
+  /* Espaçamentos Figma (space/) */
+  --space-0: 0;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-56: 56px;
+  --space-72: 72px;
+  
+  /* Shape (border-radius) Figma */
+  --shape-2: 2px;
+  --shape-20: 20px;
+  --shape-100: 100px; /* pill/circle */
+
+  /* Tipografia Figma MCP (node 2012-8386) */
+  --font-heading-x-small-size: 20px;
+  --font-heading-x-small-line: 28px;
+  --font-label-medium-size: 16px;
+  --font-label-medium-line: 20px;
+  --font-paragraph-small-size: 14px;
+  --font-paragraph-small-line: 20px;
+  --font-paragraph-x-small-size: 12px;
+  --font-paragraph-x-small-line: 20px;
+  --font-letter-spacing-figma: 0.3px;
+  
+  /* ============================================
      ESPAÇAMENTOS SEMÂNTICOS
      ============================================ */
   
@@ -91,6 +142,28 @@
   
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  /* ============================================
+     SIDEBAR (Layout) — alinhado ao export Financeiro Dashboard
+     ============================================ */
+  
+  --sidebar-width-expanded: 256px;
+  --sidebar-width-collapsed: 72px;
+  --sidebar-transition-duration: 300ms;
+  --sidebar-tooltip-delay: 400ms;
+  --sidebar-item-min-height: 44px; /* touch target */
+  --sidebar-profile-block-min-height: 72px;
+  --sidebar-padding-x: 32px; /* p-[32px] do export */
+  --sidebar-padding-x-collapsed: 12px; /* menu fechado: espaço para logo, ícones e avatar */
+  --sidebar-gap-logo-nav: 56px; /* gap entre logo e menu (space/56) */
+
+  /* mycash+ / Financeiro Dashboard (theme.css do export) */
+  --primary-accent: #dffe35;
+  --primary-accent-foreground: #030213;
+  --success: #10b981;
+  --income: #10b981;
+  --expense: #ef4444;
+  --warning: #f59e0b;
 }
 
 @layer base {

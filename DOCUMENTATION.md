@@ -4,7 +4,7 @@
 
 - [x] **PROMPT 0**: Análise e Planejamento Inicial
 - [x] **PROMPT 1**: Estrutura Base e Configuração
-- [ ] **PROMPT 2**: Sistema de Layout e Navegação Desktop
+- [x] **PROMPT 2**: Sistema de Layout e Navegação Desktop
 - [ ] **PROMPT 3**: Sistema de Layout e Navegação Mobile
 - [ ] **PROMPT 4**: Context Global e Gerenciamento de Estado
 - [ ] **PROMPT 5**: Cards de Resumo Financeiro
@@ -31,111 +31,89 @@
 
 ---
 
-## ✅ PROMPT 0: Análise e Planejamento Inicial
+## 📝 Sequência de Prompts (0 a 2 — refatorado)
 
-**Status**: ✅ CONCLUÍDO | **Data**: 09/02/2026 | **Build**: N/A (análise)
+### PROMPT 0: Análise e Planejamento Inicial
 
-### 📚 Pré-Execução
-✓ Rules relidas e aplicadas  
-✓ Figma consultado e analisado  
-✓ Hierarquia de variáveis verificada
+| Campo | Valor |
+|-------|--------|
+| **Status** | ✅ Concluído |
+| **Data** | 09/02/2026 |
+| **Build** | N/A (análise) |
 
-### 📦 Análise Realizada
-- Identificação completa de componentes visuais (Dashboard, Cartões, Transações, Perfil)
-- Mapeamento de variáveis semânticas e primitivas do design system
-- Análise da estrutura de navegação (Sidebar desktop expandida/colapsada, Header Mobile, Drawer)
-- Resumo da arquitetura proposta (estrutura de pastas, hierarquia de componentes, estratégia de componentização)
+**Objetivo:** Definir escopo, design system e arquitetura do projeto a partir do Figma.
 
-**Detalhes completos em:** `ANALISE-PROMPT-0.md`
+**Tarefas:**
+- [x] Identificar componentes visuais (Dashboard, Cartões, Transações, Perfil)
+- [x] Mapear variáveis semânticas e primitivas do design system
+- [x] Analisar navegação (Sidebar desktop expandida/colapsada, Header Mobile, Drawer)
+- [x] Documentar arquitetura (pastas, hierarquia de componentes, componentização)
+
+**Pré-execução:** Rules aplicadas; Figma e hierarquia de variáveis verificados.
+
+**Detalhes:** `ANALISE-PROMPT-0.md`
 
 ---
 
-## 📝 Sequência Completa de Prompts
+### PROMPT 1: Estrutura Base e Configuração
 
-### 🏗️ PROMPT 1: Estrutura Base e Configuração
+| Campo | Valor |
+|-------|--------|
+| **Status** | ✅ Concluído |
+| **Data** | 09/02/2026 |
+| **Build** | ✅ Sucesso (2 tentativas) |
 
-**Status**: ✅ CONCLUÍDO | **Data**: 09/02/2026 | **Build**: ✅ Sucesso (2 tentativas)
-
-**Objetivo:** Criar estrutura inicial do projeto React + TypeScript + Vite + Tailwind CSS + Supabase
+**Objetivo:** Criar estrutura inicial React + TypeScript + Vite + Tailwind CSS + Supabase.
 
 **Tarefas:**
-- [x] Configurar estrutura de pastas seguindo boas práticas React
-- [x] Criar diretórios: components (layout, dashboard, cards, modals), contexts, hooks, types, utils, constants
-- [x] Organizar subpastas por domínio dentro de components
-- [x] Configurar Tailwind CSS para reconhecer variables do Figma como classes customizadas
-- [x] Mapear todos os tokens semânticos e primitivos no Tailwind config
-- [x] Criar tipos TypeScript fundamentais: Transaction, Goal, CreditCard, BankAccount, FamilyMember
-- [x] Configurar React Router para 5 rotas principais (SPA)
-- [x] Configurar responsividade: Desktop (≥1280px), Tablet (≥768px), Mobile (<768px)
+- [x] Estrutura de pastas (components por domínio, contexts, hooks, types, utils, constants)
+- [x] Tailwind com tokens do Figma (cores, espaçamentos, tipografia, shapes)
+- [x] Tipos: Transaction, Goal, CreditCard, BankAccount, FamilyMember
+- [x] React Router: `/`, `/dashboard`, `/cards`, `/transactions`, `/profile`
+- [x] Breakpoints: Mobile &lt;768px, Tablet ≥768px, Desktop ≥1280px
+- [x] Cliente Supabase e utilitários básicos (generateUniqueId)
+- [x] Tipagem Vite (`vite-env.d.ts`) para import.meta.env
 
-**Arquivos criados:**
-- `package.json` - Dependências do projeto
-- `vite.config.ts` - Configuração do Vite
-- `tsconfig.json`, `tsconfig.node.json` - Configuração TypeScript
-- `tailwind.config.js` - Configuração Tailwind com tokens do Figma
-- `postcss.config.js` - Configuração PostCSS
-- `src/styles/index.css` - Variáveis CSS do design system
-- `src/types/transaction.ts` - Tipo Transaction
-- `src/types/goal.ts` - Tipo Goal
-- `src/types/creditCard.ts` - Tipo CreditCard
-- `src/types/bankAccount.ts` - Tipo BankAccount
-- `src/types/familyMember.ts` - Tipo FamilyMember
-- `src/types/index.ts` - Export centralizado de tipos
-- `src/App.tsx` - Componente raiz com React Router
-- `src/main.tsx` - Ponto de entrada
-- `src/pages/DashboardPage.tsx` - Página Dashboard
-- `src/pages/CardsPage.tsx` - Página Cartões
-- `src/pages/TransactionsPage.tsx` - Página Transações
-- `src/pages/ProfilePage.tsx` - Página Perfil
-- `src/services/supabase.ts` - Cliente Supabase (preparado para integração futura)
-- `src/utils/index.ts` - Utilitários básicos
-- `src/constants/index.ts` - Constantes globais
-- `src/vite-env.d.ts` - Tipos para import.meta.env
-- `README.md` - Documentação do projeto
-- `.env.example` - Exemplo de variáveis de ambiente
-- `.gitignore` - Arquivos ignorados pelo Git
-- `.eslintrc.cjs` - Configuração ESLint
+**Arquivos principais:**
+- Config: `vite.config.ts`, `tsconfig.json`, `tailwind.config.js`, `postcss.config.js`
+- Estilos: `src/styles/index.css`
+- Tipos: `src/types/*.ts`, `src/types/index.ts`
+- Rotas: `src/App.tsx`, `src/pages/*.tsx`
+- Serviços: `src/services/supabase.ts`, `src/utils/index.ts`, `src/constants/index.ts`
 
-**Tokens utilizados:**
-- Semânticas: `--color-primary`, `--color-background-primary`, `--color-text-primary`, `--spacing-page-padding-x-*`, `--font-size-heading-lg`, etc.
-- Primitivas: `--gray-900`, `--gray-700`, `--gray-500`, `--gray-200`, `--gray-50`, `--lime-500`, `--green-500`, `--red-500`
+**Tokens:** Semânticas (`--color-primary`, `--color-background-primary`, `--font-size-heading-lg`, etc.); primitivas (`--gray-*`, `--lime-500`, `--green-500`, `--red-500`).
 
-**Build Status:**
-✅ Sucesso (tentativas: 2)
-- Tentativa 1: Erro TypeScript com import.meta.env
-- Correção: Criado `src/vite-env.d.ts` com tipagens
-- Tentativa 2: ✅ Build concluído com sucesso
-
-**Commit realizado:**
-```
-feat: estrutura base do projeto (PROMPT 1) - Vite, React, TypeScript, Tailwind, React Router e tipos
-Hash: fe8a874
-```
+**Build:** Erro inicial em `import.meta.env` → corrigido com `src/vite-env.d.ts`.
 
 ---
 
-### 🎨 PROMPT 2: Sistema de Layout e Navegação Desktop
+### PROMPT 2: Sistema de Layout e Navegação Desktop
 
-**Objetivo:** Implementar sidebar desktop com estados expandido/colapsado
+| Campo | Valor |
+|-------|--------|
+| **Status** | ✅ Concluído |
+| **Build** | ✅ Sucesso |
+
+**Objetivo:** Sidebar desktop com estados expandido/colapsado; conteúdo principal com margem fluida.
 
 **Tarefas:**
-- [ ] Criar componente Sidebar ocupando lado esquerdo com altura total do viewport
-- [ ] Implementar estado expandido: logo completo "mycash+", nomes das seções, informações completas do perfil
-- [ ] Implementar estado colapsado: apenas ícone do logo, ícones das seções, apenas avatar do perfil
-- [ ] Criar botão circular na borda direita da sidebar para alternar estados
-- [ ] Ícone do botão muda: seta esquerda (expandida) / seta direita (colapsada)
-- [ ] Configurar transições suaves entre estados
-- [ ] Conteúdo principal ajusta margem esquerda de forma fluida e animada
-- [ ] Implementar sistema de tooltip para itens quando sidebar colapsada
-- [ ] Tooltip aparece ao lado direito do item com delay leve
-- [ ] Implementar item ativo: fundo preto, texto branco, ícone verde-limão
-- [ ] Itens inativos: fundo transparente, texto cinza
-- [ ] Utilizar exclusivamente variables do design system do Figma
+- [x] Sidebar: expandido (logo "Mycash+", labels, perfil completo) / colapsado (logo "My"/"cash+", ícones, avatar)
+- [x] Botão collapse na borda direita (seta esquerda/direita); transição 300ms
+- [x] MainContentWrapper: margin-left fluida e animada conforme largura da sidebar
+- [x] Tooltip nos itens quando colapsada (delay 400ms)
+- [x] Item ativo: primary-500 + secondary-900; inativo: neutral-500; hover tokenizado
+- [x] Sidebar renderizada apenas em desktop (≥1280px); em mobile/tablet não é montada
+- [x] Tokens do design system (Figma MCP + export Financeiro Dashboard)
 
-**Arquivos esperados:**
-- `src/components/layout/Sidebar/Sidebar.tsx`
-- `src/components/layout/Sidebar/SidebarItem.tsx`
-- `src/hooks/useSidebarToggle.ts`
+**Arquivos:**
+- Layout: `Sidebar/Sidebar.tsx`, `SidebarItem.tsx`, `SidebarLogo.tsx`, `SidebarIcons.tsx`, `index.ts`
+- Layout: `MainContentWrapper.tsx`, `DashboardLayout.tsx`
+- Hooks: `useSidebarToggle.ts`, `useMediaQuery.ts` (useIsDesktop)
+- Estilos: `src/styles/index.css` (variáveis --sidebar-*)
+
+**Tokens:** `--primary-500`, `--secondary-50`, `--secondary-900`, `--surface-500`, `--neutral-*`, `--space-*`, `--shape-20`, `--shape-100`, `--sidebar-width-expanded`, `--sidebar-width-collapsed`, `--sidebar-transition-duration`, `--sidebar-tooltip-delay`, `--sidebar-padding-x`, `--sidebar-gap-logo-nav`.
+
+**Notas:** Logo expandido = "Mycash" sublinhado + "+" sobrescrito; colapsado = "My" / "cash+". Perfil: Label/Medium Bold (nome), Paragraph/X-Small (email). Referência: Figma nodes 2126-3247, 2012-8386; export em `_figma_export/`.
 
 ---
 
@@ -1368,6 +1346,6 @@ Hash: fe8a874
 
 ## 📊 Status Atual
 
-**Última atualização:** 09/02/2026  
-**Prompt atual:** PROMPT 1 (Concluído)  
-**Próximo prompt:** PROMPT 2 (Sistema de Layout e Navegação Desktop)
+**Última atualização:** 10/02/2026 (refatoração Prompts 0–2)  
+**Prompt atual:** PROMPT 2 (Concluído)  
+**Próximo prompt:** PROMPT 3 (Sistema de Layout e Navegação Mobile)
