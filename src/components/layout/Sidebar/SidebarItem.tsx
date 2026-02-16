@@ -41,17 +41,23 @@ export function SidebarItem({ to, label, icon, isCollapsed }: SidebarItemProps) 
         to={to}
         end={to === '/dashboard' || to === '/'}
         className={({ isActive }) =>
-          `flex items-center gap-figma-8 rounded-shape-100 px-figma-16 py-figma-12 text-label-medium font-semibold min-h-[var(--sidebar-item-min-height)] transition-colors duration-[var(--sidebar-transition-duration)] ease-in-out ${
+          `flex items-center rounded-shape-100 py-figma-12 text-label-medium font-semibold min-h-[var(--sidebar-item-min-height)] transition-[width,padding,gap,background-color,color,border-color] duration-[var(--sidebar-transition-duration)] ease-in-out ${
             isActive
               ? 'bg-primary-figma-500 text-secondary-figma-900'
               : 'bg-transparent text-neutral-500 border border-transparent hover:bg-neutral-0 hover:border-neutral-300 hover:text-neutral-1100'
-          } ${isCollapsed ? 'justify-center px-0 w-11 min-w-11 h-11 min-h-11' : ''}`
+          } ${isCollapsed ? 'justify-center px-0 w-11 min-w-11 max-w-11 gap-0' : 'px-figma-16 gap-figma-8 w-full'}`
         }
       >
-        <span className={`flex-shrink-0 flex items-center justify-center [&_svg]:w-5 [&_svg]:h-5 [&_svg]:stroke-[2] ${isCollapsed ? 'w-6 h-6' : 'w-6 h-6'}`}>
+        <span className="flex-shrink-0 flex items-center justify-center [&_svg]:w-5 [&_svg]:h-5 [&_svg]:stroke-[2] w-6 h-6">
           {icon}
         </span>
-        {!isCollapsed && <span className="truncate">{label}</span>}
+        <span
+          className={`overflow-hidden whitespace-nowrap transition-[max-width,opacity] duration-[var(--sidebar-transition-duration)] ease-in-out ${
+            isCollapsed ? 'max-w-0 opacity-0 min-w-0' : 'max-w-[140px] opacity-100'
+          }`}
+        >
+          {label}
+        </span>
       </NavLink>
 
       {isCollapsed && showTooltip && (

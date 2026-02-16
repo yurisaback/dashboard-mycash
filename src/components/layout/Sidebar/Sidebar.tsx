@@ -6,14 +6,11 @@ import {
   IconCreditCard,
   IconReceipt,
   IconUser,
-  IconChevronLeft,
-  IconChevronRight,
 } from './SidebarIcons'
 import { ROUTES } from '../../../constants'
 
 export interface SidebarProps {
   isExpanded: boolean
-  onToggle: () => void
 }
 
 const NAV_ITEMS = [
@@ -58,10 +55,10 @@ function UserAvatar() {
  * - Perfil: nome Paragraph/Small Bold (secondary-900), email Paragraph/X-Small (neutral-500); padding space/12, space/16|24.
  * - Collapse: shape-100, secondary-50, ícone secondary-900; transição 300ms.
  */
-export function Sidebar({ isExpanded, onToggle }: SidebarProps) {
+export function Sidebar({ isExpanded }: SidebarProps) {
   return (
     <aside
-      className="flex flex-col fixed left-0 top-0 h-screen bg-surface-500 border-r border-neutral-300 z-30"
+      className="flex flex-col fixed left-0 top-0 h-screen bg-surface-500 border-r border-neutral-300 z-30 overflow-x-hidden"
       style={{
         width: isExpanded ? 'var(--sidebar-width-expanded)' : 'var(--sidebar-width-collapsed)',
         transition: `width var(--sidebar-transition-duration) ease-in-out`,
@@ -97,7 +94,7 @@ export function Sidebar({ isExpanded, onToggle }: SidebarProps) {
       </div>
 
       <div
-        className={`flex border-t border-neutral-300 flex-shrink-0 min-h-[var(--sidebar-profile-block-min-height)] pt-figma-12 ${!isExpanded ? 'flex-col items-center justify-center gap-0' : 'flex-col gap-figma-8'}`}
+        className="flex border-t border-neutral-300 flex-shrink-0 min-h-[var(--sidebar-profile-block-min-height)] pt-figma-12 flex-col items-start gap-figma-8"
       >
         <UserAvatar />
         {isExpanded && (
@@ -111,22 +108,6 @@ export function Sidebar({ isExpanded, onToggle }: SidebarProps) {
           </div>
         )}
       </div>
-
-      <button
-        type="button"
-        onClick={onToggle}
-        className="absolute rounded-full bg-neutral-0 flex items-center justify-center text-secondary-figma-900 hover:bg-neutral-300/50 transition-colors duration-[var(--sidebar-transition-duration)] ease-in-out z-10 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 focus:ring-offset-2 [&_svg]:w-4 [&_svg]:h-4"
-        style={{
-          right: '-16px',
-          top: '16px',
-          width: '32px',
-          height: '32px',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        }}
-        aria-label={isExpanded ? 'Recolher menu' : 'Expandir menu'}
-      >
-        {isExpanded ? <IconChevronLeft /> : <IconChevronRight />}
-      </button>
     </aside>
   )
 }
