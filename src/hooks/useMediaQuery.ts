@@ -24,3 +24,8 @@ export function useMediaQuery(query: string): boolean {
 export function useIsDesktop(): boolean {
   return useMediaQuery('(min-width: 1280px)')
 }
+
+/** Desktop para sidebar/header: ≥1024px (Prompt 03 - mobile nav) */
+export function useIsDesktop1024(): boolean {
+  return useMediaQuery('(min-width: 1024px)')
+}

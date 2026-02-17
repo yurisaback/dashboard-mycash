@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
 import { useSidebarToggle } from '../../hooks/useSidebarToggle'
-import { useIsDesktop } from '../../hooks/useMediaQuery'
+import { useIsDesktop1024 } from '../../hooks/useMediaQuery'
 import { Sidebar } from './Sidebar/Sidebar'
+import { HeaderMobile, HEADER_MOBILE_HEIGHT } from './HeaderMobile'
 import { MainContentWrapper } from './MainContentWrapper'
 import { IconChevronLeft, IconChevronRight } from './Sidebar/SidebarIcons'
 
@@ -14,11 +15,12 @@ export interface DashboardLayoutProps {
 
 /**
  * Layout principal do dashboard.
- * Desktop (≥1280px): renderiza Sidebar + conteúdo com margem fluida.
- * Mobile/Tablet (<1280px): não renderiza Sidebar; conteúdo ocupa 100% (Header Mobile no PROMPT 3).
+ * Desktop (≥1024px): renderiza Sidebar + toggle + conteúdo com margem fluida.
+ * Mobile/Tablet (<1024px): renderiza HeaderMobile + conteúdo com padding-top.
+ * Nunca renderiza Sidebar e HeaderMobile simultaneamente.
  */
 export function DashboardLayout({ children }: DashboardLayoutProps) {
-  const isDesktop = useIsDesktop()
+  const isDesktop = useIsDesktop1024()
   const { isExpanded, toggle } = useSidebarToggle(true)
 
   const sidebarWidth = isDesktop
@@ -26,6 +28,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       ? SIDEBAR_WIDTH_EXPANDED
       : SIDEBAR_WIDTH_COLLAPSED
     : 0
+
+  const headerTopPadding = !isDesktop ? HEADER_MOBILE_HEIGHT : 0
 
   return (
     <>
@@ -49,7 +53,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </button>
         </>
       )}
-      <MainContentWrapper sidebarWidth={sidebarWidth}>
+      {!isDesktop && <HeaderMobile />}
+      <MainContentWrapper
+        sidebarWidth={sidebarWidth}
+        paddingTop={headerTopPadding}
+      >
         {children}
       </MainContentWrapper>
     </>
