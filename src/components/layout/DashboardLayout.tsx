@@ -17,8 +17,8 @@ export interface DashboardLayoutProps {
 
 /**
  * Layout principal do dashboard.
- * Desktop (≥1024px): renderiza Sidebar + toggle + conteúdo com margem fluida.
- * Mobile/Tablet (<1024px): renderiza HeaderMobile + conteúdo com padding-top.
+ * Desktop (≥1024px): Sidebar fixa + área de conteúdo em flex que ocupa 100% do restante (sem overflow).
+ * Mobile/Tablet (<1024px): HeaderMobile + conteúdo com padding-top.
  * Nunca renderiza Sidebar e HeaderMobile simultaneamente.
  */
 export function DashboardLayout({ children }: DashboardLayoutProps) {
@@ -33,11 +33,20 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const headerTopPadding = !isDesktop ? HEADER_MOBILE_HEIGHT : 0
 
-  return (
-    <>
-      {isDesktop && (
-        <>
-          <Sidebar isExpanded={isExpanded} />
+  if (isDesktop) {
+    return (
+      <div className="flex w-full min-h-screen overflow-x-hidden bg-background-primary">
+        <Sidebar isExpanded={isExpanded} />
+        {/* Spacer: reserva a largura da sidebar (fixa) para o flex dar o restante ao conteúdo */}
+        <div
+          aria-hidden
+          className="flex-shrink-0"
+          style={{ width: sidebarWidth, minWidth: sidebarWidth }}
+        />
+        <div
+          className="flex-1 min-w-0 flex flex-col overflow-x-hidden"
+          style={{ paddingLeft: SIDEBAR_NAVBAR_GAP }}
+        >
           <button
             type="button"
             onClick={toggle}
@@ -53,11 +62,19 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           >
             {isExpanded ? <IconChevronLeft /> : <IconChevronRight />}
           </button>
-        </>
-      )}
-      {!isDesktop && <HeaderMobile />}
+          <MainContentWrapper sidebarWidth={0} paddingTop={0}>
+            {children}
+          </MainContentWrapper>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <>
+      <HeaderMobile />
       <MainContentWrapper
-        sidebarWidth={sidebarWidth}
+        sidebarWidth={0}
         sidebarNavbarGap={SIDEBAR_NAVBAR_GAP}
         paddingTop={headerTopPadding}
       >

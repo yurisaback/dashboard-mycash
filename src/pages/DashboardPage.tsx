@@ -1,4 +1,4 @@
-import { DashboardHeader, BalanceCard, IncomeCard, ExpenseCard, ExpensesByCategoryCarousel } from '../components/dashboard'
+import { DashboardHeader, BalanceCard, IncomeCard, ExpenseCard, ExpensesByCategoryCarousel, FinancialFlowChart } from '../components/dashboard'
 
 /**
  * Dashboard — layout Figma 2010-7186: flex, space-between, items-start, align-self stretch.
@@ -33,6 +33,9 @@ function DashboardPage() {
             Despesas por categoria
           </h2>
           <ExpensesByCategoryCarousel />
+        </section>
+        <section className="mt-8 w-full min-w-0" aria-label="Fluxo financeiro">
+          <FinancialFlowChart />
         </section>
       </div>
     </div>
