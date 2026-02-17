@@ -8,6 +8,8 @@ import { IconChevronLeft, IconChevronRight } from './Sidebar/SidebarIcons'
 
 const SIDEBAR_WIDTH_EXPANDED = 256
 const SIDEBAR_WIDTH_COLLAPSED = 72
+/** Distância fixa entre o menu lateral e o navbar (Figma 2021-3854, 2021-3857). */
+const SIDEBAR_NAVBAR_GAP = 32
 
 export interface DashboardLayoutProps {
   children: ReactNode
@@ -56,6 +58,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       {!isDesktop && <HeaderMobile />}
       <MainContentWrapper
         sidebarWidth={sidebarWidth}
+        sidebarNavbarGap={SIDEBAR_NAVBAR_GAP}
         paddingTop={headerTopPadding}
       >
         {children}

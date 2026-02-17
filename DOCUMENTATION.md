@@ -5,10 +5,10 @@
 - [x] **PROMPT 0**: Análise e Planejamento Inicial
 - [x] **PROMPT 1**: Estrutura Base e Configuração
 - [x] **PROMPT 2**: Sistema de Layout e Navegação Desktop
-- [ ] **PROMPT 3**: Sistema de Layout e Navegação Mobile
-- [ ] **PROMPT 4**: Context Global e Gerenciamento de Estado
+- [x] **PROMPT 3**: Sistema de Layout e Navegação Mobile
+- [x] **PROMPT 4**: Context Global e Gerenciamento de Estado
 - [ ] **PROMPT 5**: Cards de Resumo Financeiro
-- [ ] **PROMPT 6**: Header do Dashboard com Controles
+- [x] **PROMPT 6**: Header do Dashboard com Controles
 - [ ] **PROMPT 7**: Carrossel de Gastos por Categoria
 - [ ] **PROMPT 8**: Gráfico de Fluxo Financeiro
 - [ ] **PROMPT 9**: Widget de Cartões de Crédito
@@ -119,42 +119,51 @@
 
 ### 📱 PROMPT 3: Sistema de Layout e Navegação Mobile
 
+| Campo | Valor |
+|-------|--------|
+| **Status** | ✅ Concluído |
+| **Data** | 17/02/2026 |
+| **Build** | ✅ Sucesso |
+
 **Objetivo:** Implementar Header Mobile e Drawer de navegação
 
 **Tarefas:**
-- [ ] Criar componente HeaderMobile que substitui sidebar em <1024px
-- [ ] Header fixo no topo, largura total, visível durante scroll
-- [ ] Logo "mycash+" à esquerda (tamanho apropriado para mobile)
-- [ ] Avatar do usuário à direita (clicável, trigger para menu dropdown)
-- [ ] Criar componente MenuDropdown que desliza de cima para baixo
-- [ ] Menu não é fullscreen, cobre conteúdo abaixo com animação suave
-- [ ] Listar todos os itens de navegação com ícone e texto
-- [ ] Item da seção atual destacado com fundo preto
-- [ ] Botão vermelho "Sair" na parte inferior
-- [ ] Fechamento: clicar em item, botão X, ou fora do menu (overlay escuro)
-- [ ] Configurar breakpoints: desktop (≥1024px) apenas sidebar, mobile/tablet (<1024px) apenas header
-- [ ] NUNCA renderizar Sidebar + Header Mobile simultaneamente
+- [x] Criar componente HeaderMobile que substitui sidebar em <1024px
+- [x] Header fixo no topo, largura total, visível durante scroll
+- [x] Logo "mycash+" à esquerda (tamanho apropriado para mobile)
+- [x] Trigger à direita (ícone menu hamburger) para abrir dropdown (doc pedia avatar; implementado como botão menu)
+- [x] Criar componente MenuDropdown que desliza de cima para baixo
+- [x] Menu não é fullscreen, cobre conteúdo abaixo com animação suave
+- [x] Listar todos os itens de navegação com ícone e texto
+- [x] Item da seção atual destacado (primary-500 + secondary-900)
+- [x] Botão vermelho "Sair" na parte inferior (bg-danger)
+- [x] Fechamento: clicar em item, botão X, ou fora do menu (overlay escuro)
+- [x] Configurar breakpoints: desktop (≥1024px) apenas sidebar, mobile/tablet (<1024px) apenas header
+- [x] NUNCA renderizar Sidebar + Header Mobile simultaneamente
 
-**Arquivos esperados:**
-- `src/components/layout/Header/MobileHeader.tsx`
-- `src/components/layout/Drawer/MenuDropdown.tsx`
-- `src/hooks/useResponsive.ts`
+**Arquivos:** `src/components/layout/HeaderMobile/HeaderMobile.tsx`, `src/components/layout/HeaderMobile/MenuDropdown.tsx`. Breakpoint via `useIsDesktop1024()` em `src/hooks/useMediaQuery.ts`.
 
 ---
 
 ### 💾 PROMPT 4: Context Global e Gerenciamento de Estado
+
+| Campo | Valor |
+|-------|--------|
+| **Status** | ✅ Concluído |
+| **Data** | 17/02/2026 |
+| **Build** | ✅ Sucesso |
 
 **⚠️ REGRA CRÍTICA:** NÃO usar localStorage, sessionStorage ou qualquer browser storage API. TODO estado via React state (useState, useReducer).
 
 **Objetivo:** Criar FinanceProvider para gerenciar estado global da aplicação
 
 **Tarefas:**
-- [ ] Criar FinanceProvider no nível mais alto da árvore
-- [ ] Manter 5 arrays principais: transactions, goals, creditCards, bankAccounts, familyMembers
-- [ ] Tipar cada array corretamente com tipos TypeScript criados
-- [ ] Implementar funções CRUD para cada entidade (adicionar, atualizar, deletar)
-- [ ] Criar estados para filtros globais: selectedMember, dateRange, transactionType, searchText
-- [ ] Implementar funções de cálculo derivadas:
+- [x] Criar FinanceProvider no nível mais alto da árvore
+- [x] Manter 5 arrays principais: transactions, goals, creditCards, bankAccounts, familyMembers
+- [x] Tipar cada array corretamente com tipos TypeScript criados
+- [x] Implementar funções CRUD para cada entidade (adicionar, atualizar, deletar)
+- [x] Criar estados para filtros globais: selectedMember, dateRange, transactionType, searchText
+- [x] Implementar funções de cálculo derivadas:
   - getFilteredTransactions (aplica todos os filtros)
   - calculateTotalBalance (soma saldos, subtrai faturas)
   - calculateIncomeForPeriod
@@ -162,18 +171,15 @@
   - calculateExpensesByCategory (agrupado e ordenado)
   - calculateCategoryPercentage
   - calculateSavingsRate
-- [ ] Criar hook customizado useFinance (único ponto de acesso ao contexto)
-- [ ] Popular estado inicial com dados mock realistas:
+- [x] Criar hook customizado useFinance (único ponto de acesso ao contexto)
+- [x] Popular estado inicial com dados mock realistas:
   - 3 membros da família brasileira
   - 3 cartões de bancos conhecidos
   - 20-30 transações distribuídas nos últimos 3 meses
   - 4 objetivos variados
   - Categorias padrão brasileiras
 
-**Arquivos esperados:**
-- `src/contexts/FinanceContext.tsx`
-- `src/hooks/useFinance.ts`
-- `src/types/index.ts` (exportar todos os tipos)
+**Arquivos:** `src/contexts/FinanceContext.tsx`, `src/contexts/mockData.ts`, `src/hooks/useFinance.ts`, tipos em `src/types/index.ts`. App.tsx envolve a árvore com `FinanceProvider`.
 
 ---
 
@@ -213,47 +219,31 @@
 
 ### 🎯 PROMPT 6: Header do Dashboard com Controles
 
+| Campo | Valor |
+|-------|--------|
+| **Status** | ✅ Concluído |
+| **Data** | 17/02/2026 |
+| **Build** | ✅ Sucesso |
+
 **Objetivo:** Implementar barra de controles no topo do dashboard
 
 **Tarefas:**
-- [ ] Criar componente DashboardHeader (barra horizontal responsiva)
-- [ ] Campo de busca à esquerda com ícone de lupa
-  - Placeholder "Pesquisar..."
-  - Largura fixa no desktop, 100% no mobile
-  - Busca em tempo real (atualiza searchText no contexto)
-  - Case-insensitive, procura em descrição OU categoria
-- [ ] Botão de filtros (botão circular com ícone de controles deslizantes)
-  - Desktop: abre popover flutuante abaixo
-  - Mobile: abre modal fullscreen deslizando de baixo para cima
-- [ ] Criar FilterPopover para desktop:
-  - Fundo branco semi-transparente com glassmorphism (backdrop blur)
-  - Seção "Tipo de Transação" com 3 opções de rádio: "Todos", "Receitas", "Despesas"
-  - Opção selecionada: fundo preto, texto branco
-  - Atualiza transactionType no contexto ao clicar
-- [ ] Implementar seletor de período:
-  - Botão mostra período atual formatado: "01 jan - 31 jan, 2024"
-  - Ao clicar, abre calendário interativo
-  - Desktop: 2 meses lado a lado
-  - Mobile: 1 mês por vez com setas de navegação
-  - Seleção de intervalo: primeiro clique = data inicial, segundo = data final
-  - Botões de atalho: "Este mês", "Mês passado", "Últimos 3 meses", "Este ano"
-- [ ] Widget de membros da família:
-  - Avatares circulares parcialmente sobrepostos (efeito pilha)
-  - Cada avatar tem borda branca
-  - Hover: avatar cresce levemente e move-se para frente
-  - Clique: aplica filtro de membro (borda preta grossa, ícone check verde)
-  - Clique novamente: remove filtro
-- [ ] Botão "+" após avatares (abre modal de adicionar novo membro)
-- [ ] Botão "Nova Transação" no canto direito:
-  - Fundo preto, texto branco, ícone "+"
-  - Mobile: largura total, altura maior para facilitar toque
-- [ ] Utilizar exclusivamente variables do design system
+- [x] Criar componente DashboardHeader (barra horizontal responsiva)
+- [x] Campo de busca à esquerda com ícone de lupa
+  - Placeholder "Pesquisar...", largura responsiva (100% mobile / max desktop)
+  - Busca em tempo real (searchText no contexto)
+- [x] Botão de filtros (circular com ícone)
+  - Desktop: FilterPopover flutuante; Mobile: FilterModal fullscreen
+- [x] FilterPopover: glassmorphism, "Tipo de Transação" (Todos / Receitas / Despesas), opção selecionada destaque, atualiza transactionType
+- [x] Seletor de período (DateRangePicker):
+  - Botão com período formatado (ex.: "01 jan - 31 jan, 2026")
+  - Calendário com seleção de intervalo, atalhos: "Este mês", "Mês passado", "Últimos 3 meses", "Este ano"
+- [x] Widget de membros: avatares sobrepostos (-space-x-3), borda branca, hover scale, clique aplica/remove filtro (borda preta + check verde)
+- [x] Botão "+" após avatares (abre modal adicionar membro — placeholder)
+- [x] Botão "Nova Transação" (fundo preto, ícone "+", mobile full width e min-h touch)
+- [x] Tokens do design system (neutral-*, primary-figma-500, shape-20, etc.)
 
-**Arquivos esperados:**
-- `src/components/dashboard/DashboardHeader.tsx`
-- `src/components/dashboard/FilterPopover.tsx`
-- `src/components/dashboard/DateRangePicker.tsx`
-- `src/components/dashboard/FamilyMembersWidget.tsx`
+**Arquivos:** `src/components/dashboard/DashboardHeader.tsx`, `FilterPopover.tsx`, `FilterModal.tsx`, `DateRangePicker.tsx`, `FamilyMembersWidget.tsx`, `DashboardIcons.tsx`.
 
 ---
 
@@ -1346,6 +1336,12 @@
 
 ## 📊 Status Atual
 
-**Última atualização:** 10/02/2026 (refatoração Prompts 0–2)  
-**Prompt atual:** PROMPT 2 (Concluído)  
-**Próximo prompt:** PROMPT 3 (Sistema de Layout e Navegação Mobile)
+**Última atualização:** 17/02/2026  
+**Prompt atual:** PROMPT 6 (Concluído)  
+**Próximo prompt:** PROMPT 5 (Cards de Resumo Financeiro)
+
+### Já implementado
+- **Prompts 0–2:** Estrutura, layout desktop, sidebar expandida/colapsada.
+- **PROMPT 3:** HeaderMobile (<1024px), fixo no topo; MenuDropdown com itens de navegação, item ativo destacado, botão Sair; overlay e animação; Sidebar e HeaderMobile nunca juntos.
+- **PROMPT 4:** `FinanceContext`, `useFinance`, CRUD, filtros, funções derivadas, `mockData.ts`, `FinanceProvider` no App.
+- **PROMPT 6:** DashboardHeader com busca, filtros (popover/modal), DateRangePicker, FamilyMembersWidget, botão Nova Transação; FilterPopover, FilterModal, tokens do design system.

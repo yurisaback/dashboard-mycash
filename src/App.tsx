@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { FinanceProvider } from './contexts/FinanceContext'
 import { DashboardLayout } from './components/layout/DashboardLayout'
 import DashboardPage from './pages/DashboardPage'
 import CardsPage from './pages/CardsPage'
@@ -7,17 +8,19 @@ import ProfilePage from './pages/ProfilePage'
 
 function App() {
   return (
-    <BrowserRouter>
-      <DashboardLayout>
-        <Routes>
+    <FinanceProvider>
+      <BrowserRouter>
+        <DashboardLayout>
+          <Routes>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/cards" element={<CardsPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-        </Routes>
-      </DashboardLayout>
-    </BrowserRouter>
+          </Routes>
+        </DashboardLayout>
+      </BrowserRouter>
+    </FinanceProvider>
   )
 }
 

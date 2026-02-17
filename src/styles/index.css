@@ -219,6 +219,17 @@
   }
 }
 
+@keyframes slideUpFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer utilities {
   /* Utilitários para padding responsivo do conteúdo principal */
   .page-padding-x {
