@@ -30,8 +30,8 @@ export function FilterModal({ isOpen, onClose }: FilterModalProps) {
       />
       <div
         className="fixed bottom-0 left-0 right-0 bg-surface-500 shadow-lg p-figma-24"
-        style={{ zIndex: 10001 }}
         style={{
+          zIndex: 10001,
           borderTopLeftRadius: 'var(--shape-20)',
           borderTopRightRadius: 'var(--shape-20)',
           animation: 'slideUpFromBottom 0.3s ease-out',

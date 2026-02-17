@@ -228,7 +228,7 @@ export function DateRangePicker() {
             setRightMonth(addMonths(dateRange.startDate, 1))
           }
         }}
-        className="flex items-center gap-figma-8 px-figma-12 py-figma-12 rounded-shape-20 bg-neutral-300/30 border border-neutral-300 text-paragraph-small font-medium text-neutral-1100 hover:bg-neutral-300/50 transition-colors min-w-[120px]"
+        className="flex min-w-0 shrink items-center gap-figma-8 px-figma-12 py-figma-12 rounded-shape-20 bg-neutral-300/30 border border-neutral-300 text-paragraph-small font-medium text-neutral-1100 hover:bg-neutral-300/50 transition-colors"
       >
         <IconCalendar />
         <span className="truncate">{formatRangeDisplay(dateRange)}</span>

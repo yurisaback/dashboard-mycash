@@ -26,7 +26,7 @@ export function MainContentWrapper({
 
   return (
     <main
-      className="min-h-screen w-full min-w-0 bg-background-primary"
+      className="flex min-h-screen w-full min-w-0 max-w-full flex-col overflow-x-hidden bg-background-primary"
       style={{
         marginLeft,
         paddingTop,

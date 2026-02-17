@@ -89,6 +89,8 @@ interface FinanceContextValue {
   calculateExpensesByCategory: () => CategorySummary[]
   calculateCategoryPercentage: () => CategorySummary[]
   calculateSavingsRate: () => number
+  /** Variação percentual do saldo em relação ao período anterior (ex.: +12 para "+12% esse mês"). */
+  calculateBalanceGrowthPercent: () => number
 }
 
 const defaultDateRange: DateRange = {
@@ -191,6 +193,16 @@ export function FinanceProvider({ children }: FinanceProviderProps) {
     if (income <= 0) return 0
     return Math.round(((income - expenses) / income) * 100)
   }, [calculateIncomeForPeriod, calculateExpensesForPeriod])
+
+  const calculateBalanceGrowthPercent = useCallback((): number => {
+    const totalBalance = calculateTotalBalance()
+    const income = calculateIncomeForPeriod()
+    const expenses = calculateExpensesForPeriod()
+    const netPeriod = income - expenses
+    const previousBalance = totalBalance - netPeriod
+    if (previousBalance === 0) return 0
+    return Math.round((netPeriod / Math.abs(previousBalance)) * 100)
+  }, [calculateTotalBalance, calculateIncomeForPeriod, calculateExpensesForPeriod])
 
   const addTransaction = useCallback(
     (t: Omit<Transaction, 'id' | 'createdAt' | 'updatedAt'>) => {
@@ -364,6 +376,7 @@ export function FinanceProvider({ children }: FinanceProviderProps) {
       calculateExpensesByCategory,
       calculateCategoryPercentage,
       calculateSavingsRate,
+      calculateBalanceGrowthPercent,
     }),
     [
       transactions,
@@ -398,6 +411,7 @@ export function FinanceProvider({ children }: FinanceProviderProps) {
       calculateExpensesByCategory,
       calculateCategoryPercentage,
       calculateSavingsRate,
+      calculateBalanceGrowthPercent,
     ]
   )
 

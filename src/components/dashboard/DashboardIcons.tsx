@@ -65,3 +65,63 @@ export function IconCalendar() {
     </svg>
   )
 }
+
+/** Gráfico crescente (badge Saldo Total). */
+export function IconChartTrendingUp() {
+  return (
+    <svg {...iconProps} className="w-4 h-4 flex-shrink-0">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+      <polyline points="17 6 23 6 23 12" />
+    </svg>
+  )
+}
+
+/** Seta diagonal baixo-esquerda (entrada/receitas). */
+export function IconArrowDownLeft() {
+  return (
+    <svg {...iconProps} className="w-4 h-4 flex-shrink-0">
+      <line x1="17" y1="7" x2="7" y2="17" />
+      <polyline points="17 13 17 7 11 7" />
+    </svg>
+  )
+}
+
+/** Seta diagonal cima-direita (saída/despesas). */
+export function IconArrowUpRight() {
+  return (
+    <svg {...iconProps} className="w-4 h-4 flex-shrink-0">
+      <line x1="7" y1="17" x2="17" y2="7" />
+      <polyline points="17 11 17 7 11 7" />
+    </svg>
+  )
+}
+
+/** Cifrão $ — Saldo total (Figma 2021-3866, imagem referência). */
+export function IconDollar() {
+  return (
+    <svg {...iconProps} className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+      <line x1="12" y1="2" x2="12" y2="22" />
+      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+    </svg>
+  )
+}
+
+/** Seta para baixo (receitas — imagem: seta vertical ↓). */
+export function IconArrowDown() {
+  return (
+    <svg {...iconProps} className="w-5 h-5 flex-shrink-0">
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <polyline points="19 12 12 19 5 12" />
+    </svg>
+  )
+}
+
+/** Seta para cima (despesas — imagem: seta vertical ↑). */
+export function IconArrowUp() {
+  return (
+    <svg {...iconProps} className="w-5 h-5 flex-shrink-0">
+      <line x1="12" y1="19" x2="12" y2="5" />
+      <polyline points="5 12 12 5 19 12" />
+    </svg>
+  )
+}

@@ -7,7 +7,7 @@
 - [x] **PROMPT 2**: Sistema de Layout e Navegação Desktop
 - [x] **PROMPT 3**: Sistema de Layout e Navegação Mobile
 - [x] **PROMPT 4**: Context Global e Gerenciamento de Estado
-- [ ] **PROMPT 5**: Cards de Resumo Financeiro
+- [x] **PROMPT 5**: Cards de Resumo Financeiro
 - [x] **PROMPT 6**: Header do Dashboard com Controles
 - [ ] **PROMPT 7**: Carrossel de Gastos por Categoria
 - [ ] **PROMPT 8**: Gráfico de Fluxo Financeiro
@@ -184,6 +184,11 @@
 ---
 
 ### 📊 PROMPT 5: Cards de Resumo Financeiro
+
+| Campo | Valor |
+|-------|--------|
+| **Status** | ✅ Concluído |
+| **Build** | ✅ Sucesso |
 
 **Objetivo:** Implementar 3 cards de resumo (Saldo Total, Receitas, Despesas)
 
@@ -1338,10 +1343,11 @@
 
 **Última atualização:** 17/02/2026  
 **Prompt atual:** PROMPT 6 (Concluído)  
-**Próximo prompt:** PROMPT 5 (Cards de Resumo Financeiro)
+**Próximo prompt:** PROMPT 7 (Carrossel de Gastos por Categoria)
 
 ### Já implementado
 - **Prompts 0–2:** Estrutura, layout desktop, sidebar expandida/colapsada.
 - **PROMPT 3:** HeaderMobile (<1024px), fixo no topo; MenuDropdown com itens de navegação, item ativo destacado, botão Sair; overlay e animação; Sidebar e HeaderMobile nunca juntos.
 - **PROMPT 4:** `FinanceContext`, `useFinance`, CRUD, filtros, funções derivadas, `mockData.ts`, `FinanceProvider` no App.
 - **PROMPT 6:** DashboardHeader com busca, filtros (popover/modal), DateRangePicker, FamilyMembersWidget, botão Nova Transação; FilterPopover, FilterModal, tokens do design system.
+- **PROMPT 5:** BalanceCard (fundo preto, blob verde-limão, badge +% vs mês anterior), IncomeCard (receitas), ExpenseCard (despesas); valores de calculateTotalBalance, calculateIncomeForPeriod, calculateExpensesForPeriod; animação useCountUp ~800ms; layout grid 1.2fr 1fr 1fr no desktop, coluna no mobile; formatCurrencyBR em utils.

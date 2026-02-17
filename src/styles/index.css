@@ -53,6 +53,11 @@
   
   /* Colors/Surface */
   --surface-500: #FFFFFF; /* Fundo sidebar */
+
+  /* Colors/Accent — Cards resumo (Figma 2021-3866) */
+  --accent-blue-600: #3070E7;   /* Saldo total — ícone $ */
+  --accent-green-600: #38BB82;  /* Receitas — seta */
+  --accent-red-600: #D85E6D;    /* Despesas — seta */
   
   /* color/neutral */
   --neutral-0: #ffffff;
@@ -184,6 +189,11 @@
     overflow-x: hidden;
     width: 100%;
   }
+
+  #root {
+    width: 100%;
+    height: fit-content;
+  }
   
   /* Respeitar prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
@@ -231,6 +241,11 @@
 }
 
 @layer utilities {
+  /* Scrollbar oculta no carrossel horizontal */
+  [data-carousel-scroll]::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Utilitários para padding responsivo do conteúdo principal */
   .page-padding-x {
     @apply px-4 md:px-6 lg:px-8;

@@ -33,7 +33,7 @@ export function DashboardHeader() {
       style={{ width: '100%' }}
     >
       {/* Coluna esquerda: encolhe (minmax(0,1fr)); pesquisa preenche e encolhe primeiro — botão direito sempre visível (Figma 2187-1666) */}
-      <div className="flex min-w-0 w-fit flex-col overflow-x-hidden md:flex-row md:items-center md:gap-3 lg:gap-4">
+      <div className="flex min-w-0 w-fit flex-col gap-figma-16 overflow-x-hidden md:flex-row md:items-center md:gap-3 lg:gap-4">
         <div className="min-w-0 flex-1 w-full md:min-w-0">
           <label htmlFor="dashboard-search" className="sr-only">
             Pesquisar transações
@@ -85,7 +85,7 @@ export function DashboardHeader() {
       </div>
 
       {/* Coluna direita: auto — botão Nova transação sempre visível, nunca cortado */}
-      <div className="flex-shrink-0 md:flex md:justify-start md:items-start">
+      <div className="mt-figma-16 flex-shrink-0 md:mt-0 md:flex md:justify-start md:items-start">
         <button
           type="button"
           className="flex items-center justify-center gap-figma-8 w-full md:w-auto px-figma-24 py-figma-16 md:py-figma-12 rounded-shape-20 bg-secondary-figma-900 text-neutral-0 text-label-medium font-semibold hover:opacity-90 transition-opacity min-h-[48px] md:min-h-[44px] focus:outline-none focus:ring-2 focus:ring-primary-figma-500 focus:ring-offset-2 whitespace-nowrap"

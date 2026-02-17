@@ -61,6 +61,11 @@ export default {
           500: 'var(--neutral-500)',
           1100: 'var(--neutral-1100)',
         },
+        'accent': {
+          'blue-600': 'var(--accent-blue-600)',
+          'green-600': 'var(--accent-green-600)',
+          'red-600': 'var(--accent-red-600)',
+        },
         /* Financeiro Dashboard export (theme.css) */
         'primary-accent': 'var(--primary-accent)',
         'primary-accent-foreground': 'var(--primary-accent-foreground)',

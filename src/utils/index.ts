@@ -19,3 +19,15 @@ export function generateUniqueId(): string {
   // Fallback para ambientes sem crypto.randomUUID
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 }
+
+/**
+ * Formata valor como moeda brasileira: R$ 1.234,56
+ */
+export function formatCurrencyBR(value: number): string {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value)
+}

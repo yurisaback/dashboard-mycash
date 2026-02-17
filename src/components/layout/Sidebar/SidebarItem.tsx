@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link, useLocation } from 'react-router-dom'
 import { ReactNode, useState } from 'react'
 
 /** Deve ser igual a --sidebar-tooltip-delay (400ms) em index.css */
@@ -9,7 +9,15 @@ export interface SidebarItemProps {
   label: string
   icon: ReactNode
   isCollapsed: boolean
+  /** Quando definido, o item fica ativo se pathname estiver em um destes caminhos (ex.: home em "/" e "/dashboard"). */
+  activePaths?: readonly string[]
 }
+
+const linkBaseClasses =
+  'flex items-center rounded-shape-100 py-figma-12 text-label-medium font-semibold min-h-[var(--sidebar-item-min-height)] transition-[width,padding,gap,background-color,color,border-color] duration-[var(--sidebar-transition-duration)] ease-in-out'
+const linkActiveClasses = 'bg-primary-figma-500 text-secondary-figma-900'
+const linkInactiveClasses =
+  'bg-transparent text-neutral-500 border border-transparent hover:bg-neutral-0 hover:border-neutral-300 hover:text-neutral-1100'
 
 /**
  * Item de navegação da Sidebar (Figma MCP node 2012-8386).
@@ -17,9 +25,13 @@ export interface SidebarItemProps {
  * - Inativo: transparente, texto/ícone neutral-500; hover neutral-300/50 + neutral-1100.
  * - Borda pill (shape-20). Label/Medium. Tooltip quando colapsado com delay token.
  */
-export function SidebarItem({ to, label, icon, isCollapsed }: SidebarItemProps) {
+export function SidebarItem({ to, label, icon, isCollapsed, activePaths }: SidebarItemProps) {
   const [showTooltip, setShowTooltip] = useState(false)
   const [tooltipTimeout, setTooltipTimeout] = useState<ReturnType<typeof setTimeout> | null>(null)
+  const location = useLocation()
+
+  const isActiveFromPaths = activePaths != null && activePaths.includes(location.pathname)
+  const layoutClasses = isCollapsed ? 'justify-center px-0 w-11 min-w-11 max-w-11 gap-0' : 'px-figma-16 gap-figma-8 w-full'
 
   const handleMouseEnter = () => {
     if (!isCollapsed) return
@@ -35,30 +47,41 @@ export function SidebarItem({ to, label, icon, isCollapsed }: SidebarItemProps) 
     setShowTooltip(false)
   }
 
+  const content = (
+    <>
+      <span className="flex-shrink-0 flex items-center justify-center [&_svg]:w-5 [&_svg]:h-5 [&_svg]:stroke-[2] w-6 h-6">
+        {icon}
+      </span>
+      <span
+        className={`overflow-hidden whitespace-nowrap transition-[max-width,opacity] duration-[var(--sidebar-transition-duration)] ease-in-out ${
+          isCollapsed ? 'max-w-0 opacity-0 min-w-0' : 'max-w-[140px] opacity-100'
+        }`}
+      >
+        {label}
+      </span>
+    </>
+  )
+
   return (
     <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <NavLink
-        to={to}
-        end={to === '/dashboard' || to === '/'}
-        className={({ isActive }) =>
-          `flex items-center rounded-shape-100 py-figma-12 text-label-medium font-semibold min-h-[var(--sidebar-item-min-height)] transition-[width,padding,gap,background-color,color,border-color] duration-[var(--sidebar-transition-duration)] ease-in-out ${
-            isActive
-              ? 'bg-primary-figma-500 text-secondary-figma-900'
-              : 'bg-transparent text-neutral-500 border border-transparent hover:bg-neutral-0 hover:border-neutral-300 hover:text-neutral-1100'
-          } ${isCollapsed ? 'justify-center px-0 w-11 min-w-11 max-w-11 gap-0' : 'px-figma-16 gap-figma-8 w-full'}`
-        }
-      >
-        <span className="flex-shrink-0 flex items-center justify-center [&_svg]:w-5 [&_svg]:h-5 [&_svg]:stroke-[2] w-6 h-6">
-          {icon}
-        </span>
-        <span
-          className={`overflow-hidden whitespace-nowrap transition-[max-width,opacity] duration-[var(--sidebar-transition-duration)] ease-in-out ${
-            isCollapsed ? 'max-w-0 opacity-0 min-w-0' : 'max-w-[140px] opacity-100'
-          }`}
+      {activePaths != null ? (
+        <Link
+          to={to}
+          className={`${linkBaseClasses} ${isActiveFromPaths ? linkActiveClasses : linkInactiveClasses} ${layoutClasses}`}
         >
-          {label}
-        </span>
-      </NavLink>
+          {content}
+        </Link>
+      ) : (
+        <NavLink
+          to={to}
+          end={to === '/dashboard' || to === '/'}
+          className={({ isActive }) =>
+            `${linkBaseClasses} ${isActive ? linkActiveClasses : linkInactiveClasses} ${layoutClasses}`
+          }
+        >
+          {content}
+        </NavLink>
+      )}
 
       {isCollapsed && showTooltip && (
         <div

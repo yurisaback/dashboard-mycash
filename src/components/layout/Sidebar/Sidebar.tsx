@@ -13,12 +13,18 @@ export interface SidebarProps {
   isExpanded: boolean
 }
 
-const NAV_ITEMS = [
-  { to: '/dashboard', label: 'Home', icon: <IconHome /> },
+/** Home: ativo em "/" e "/dashboard" (página inicial). */
+const NAV_ITEMS: Array<{
+  to: string
+  label: string
+  icon: React.ReactElement
+  activePaths?: readonly string[]
+}> = [
+  { to: '/dashboard', label: 'Home', icon: <IconHome />, activePaths: ['/', '/dashboard'] },
   { to: ROUTES.CARDS, label: 'Cartões', icon: <IconCreditCard /> },
   { to: ROUTES.TRANSACTIONS, label: 'Transações', icon: <IconReceipt /> },
   { to: ROUTES.PROFILE, label: 'Perfil', icon: <IconUser /> },
-] as const
+]
 
 const AVATAR_SRC = '/assets/avatar-user.png'
 
@@ -88,6 +94,7 @@ export function Sidebar({ isExpanded }: SidebarProps) {
             label={item.label}
             icon={item.icon}
             isCollapsed={!isExpanded}
+            activePaths={item.activePaths}
           />
         ))}
         </nav>
