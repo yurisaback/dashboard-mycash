@@ -9,7 +9,7 @@ import {
   type TooltipProps,
 } from 'recharts'
 import { formatCurrencyBR, formatCurrencyCompact } from '../../utils'
-import { IconChartTrendingUp } from './DashboardIcons'
+import { IconChartHistogram } from './DashboardIcons'
 
 /** Ponto de dados do fluxo (por mês). Estrutura preparada para dados reais agrupados por mês. */
 export interface FlowDataPoint {
@@ -57,7 +57,7 @@ function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
       <p className="text-paragraph-x-small font-normal mb-figma-4" style={{ color: 'var(--accent-green-600)' }}>
         Receitas: {formatCurrencyBR(data.receitas)}
       </p>
-      <p className="text-paragraph-x-small font-normal text-neutral-1100">
+      <p className="text-paragraph-x-small font-normal" style={{ color: 'var(--accent-red-600)' }}>
         Despesas: {formatCurrencyBR(data.despesas)}
       </p>
     </div>
@@ -80,7 +80,7 @@ export function FinancialFlowChart() {
       <div className="flex flex-wrap items-center justify-between gap-figma-16 mb-figma-24">
         <div className="flex items-center gap-figma-8">
           <span className="text-neutral-1100 [&_svg]:w-5 [&_svg]:h-5" aria-hidden>
-            <IconChartTrendingUp />
+            <IconChartHistogram />
           </span>
           <h2 className="text-heading-x-small font-bold text-neutral-1100">
             Fluxo financeiro
@@ -97,7 +97,8 @@ export function FinancialFlowChart() {
           </span>
           <span className="flex items-center gap-figma-8 text-paragraph-x-small text-neutral-1100">
             <span
-              className="inline-block w-2 h-2 rounded-full shrink-0 bg-neutral-1100"
+              className="inline-block w-2 h-2 rounded-full shrink-0"
+              style={{ backgroundColor: 'var(--accent-red-600)' }}
               aria-hidden
             />
             Despesas
@@ -124,8 +125,8 @@ export function FinancialFlowChart() {
                 <stop offset="1" stopColor="var(--accent-green-600)" stopOpacity={0} />
               </linearGradient>
               <linearGradient id="despesasFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="var(--neutral-1100)" stopOpacity={0.1} />
-                <stop offset="1" stopColor="var(--neutral-1100)" stopOpacity={0} />
+                <stop offset="0" stopColor="var(--accent-red-600)" stopOpacity={0.3} />
+                <stop offset="1" stopColor="var(--accent-red-600)" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid
@@ -164,7 +165,7 @@ export function FinancialFlowChart() {
             <Area
               type="monotone"
               dataKey="despesas"
-              stroke="var(--neutral-1100)"
+              stroke="var(--accent-red-600)"
               strokeWidth={3}
               fill="url(#despesasFill)"
             />

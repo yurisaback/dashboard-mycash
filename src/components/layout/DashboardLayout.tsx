@@ -35,7 +35,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   if (isDesktop) {
     return (
-      <div className="flex w-full min-h-screen overflow-x-hidden bg-background-primary">
+      <div className="flex w-full h-screen overflow-hidden bg-background-primary">
         <Sidebar isExpanded={isExpanded} />
         {/* Spacer: reserva a largura da sidebar (fixa) para o flex dar o restante ao conteúdo */}
         <div
@@ -44,7 +44,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           style={{ width: sidebarWidth, minWidth: sidebarWidth }}
         />
         <div
-          className="flex-1 min-w-0 flex flex-col overflow-x-hidden"
+          className="flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden"
           style={{ paddingLeft: SIDEBAR_NAVBAR_GAP }}
         >
           <button
@@ -62,9 +62,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           >
             {isExpanded ? <IconChevronLeft /> : <IconChevronRight />}
           </button>
-          <MainContentWrapper sidebarWidth={0} paddingTop={0}>
-            {children}
-          </MainContentWrapper>
+          {/* Apenas esta área rola; sidebar permanece fixa 100vh */}
+          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
+            <MainContentWrapper sidebarWidth={0} paddingTop={0}>
+              {children}
+            </MainContentWrapper>
+          </div>
         </div>
       </div>
     )
