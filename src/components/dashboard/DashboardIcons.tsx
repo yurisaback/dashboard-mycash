@@ -47,6 +47,17 @@ export function IconPlus() {
   )
 }
 
+/** Ícone de carteira (20px) — widget Próximas despesas. */
+export function IconWallet() {
+  return (
+    <svg {...iconProps} className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path d="M2 10h20" />
+      <circle cx="17" cy="15" r="1.5" fill="currentColor" />
+    </svg>
+  )
+}
+
 export function IconCheck() {
   return (
     <svg {...iconProps} className="w-3 h-3 flex-shrink-0" strokeWidth={3}>

@@ -451,6 +451,87 @@ function createTransactions(): Transaction[] {
     }
   })
 
+  // Despesas pendentes (Próximas despesas) — datas de vencimento variadas para testar ordenação
+  const nextMonth = addMonths(now, 1)
+  const pendingExpenses: Array<Omit<Transaction, 'id' | 'createdAt' | 'updatedAt'>> = [
+    {
+      type: 'expense',
+      value: 154,
+      description: 'Conta de luz',
+      category: 'Contas',
+      date: setDate(now, 5),
+      dueDate: setDate(now, 21),
+      accountId: CARD_IDS.nubank,
+      memberId: null,
+      installments: 1,
+      currentInstallment: 1,
+      status: 'pending',
+      isRecurring: true,
+      isPaid: false,
+    },
+    {
+      type: 'expense',
+      value: 154,
+      description: 'Conta de luz',
+      category: 'Contas',
+      date: setDate(nextMonth, 5),
+      dueDate: setDate(nextMonth, 21),
+      accountId: CARD_IDS.nubank,
+      memberId: null,
+      installments: 1,
+      currentInstallment: 1,
+      status: 'pending',
+      isRecurring: true,
+      isPaid: false,
+    },
+    {
+      type: 'expense',
+      value: 89,
+      description: 'Streaming',
+      category: 'Lazer',
+      date: setDate(now, 1),
+      dueDate: setDate(now, 25),
+      accountId: CARD_IDS.itau,
+      memberId: null,
+      installments: 1,
+      currentInstallment: 1,
+      status: 'pending',
+      isRecurring: true,
+      isPaid: false,
+    },
+    {
+      type: 'expense',
+      value: 320,
+      description: 'Academia',
+      category: 'Saúde',
+      date: setDate(now, 10),
+      dueDate: setDate(nextMonth, 10),
+      accountId: BANK_IDS.nubank,
+      memberId: null,
+      installments: 1,
+      currentInstallment: 1,
+      status: 'pending',
+      isRecurring: true,
+      isPaid: false,
+    },
+    {
+      type: 'expense',
+      value: 180,
+      description: 'Internet',
+      category: 'Contas',
+      date: setDate(now, 12),
+      dueDate: setDate(now, 12),
+      accountId: BANK_IDS.itau,
+      memberId: null,
+      installments: 1,
+      currentInstallment: 1,
+      status: 'pending',
+      isRecurring: true,
+      isPaid: false,
+    },
+  ]
+  pendingExpenses.forEach((t) => addTx(t))
+
   return tx
 }
 
