@@ -181,3 +181,44 @@ export function IconArrowUp() {
     </svg>
   )
 }
+
+/** Ícone documento/lista — título Extrato detalhado. */
+export function IconDocumentList() {
+  return (
+    <svg {...iconProps} className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <line x1="10" y1="9" x2="8" y2="9" />
+    </svg>
+  )
+}
+
+/** Ícone usuário genérico — avatar fallback na tabela. */
+export function IconUser() {
+  return (
+    <svg {...iconProps} className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4" />
+      <path d="M20 21a8 8 0 0 0-16 0" />
+    </svg>
+  )
+}
+
+/** Seta esquerda — paginação Anterior. */
+export function IconChevronLeft() {
+  return (
+    <svg {...iconProps} className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  )
+}
+
+/** Seta direita — paginação Próxima. */
+export function IconChevronRight() {
+  return (
+    <svg {...iconProps} className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  )
+}

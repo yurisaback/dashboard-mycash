@@ -92,7 +92,7 @@ export function MenuDropdown({ isOpen, onClose }: MenuDropdownProps) {
 
       {/* Painel do menu — desliza de cima para baixo ao abrir, de baixo para cima ao fechar */}
       <div
-        className="fixed left-0 right-0 top-0 z-50 bg-surface-500 shadow-md max-h-[70vh] overflow-y-auto rounded-b-shape-20"
+        className="scrollbar-hide fixed left-0 right-0 top-0 z-50 bg-surface-500 shadow-md max-h-[70vh] overflow-y-auto rounded-b-shape-20"
         style={{
           animation: isClosing
             ? `slideUp ${MENU_ANIMATION_DURATION_MS}ms ease-in forwards`

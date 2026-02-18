@@ -153,7 +153,7 @@ export function CreditCardAddModal({ isOpen, onClose }: CreditCardAddModalProps)
     <>
       <div className="fixed inset-0 bg-secondary-figma-900/50" style={{ zIndex: 10000 }} onClick={onClose} aria-hidden />
       <div
-        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-32 shadow-md max-h-[90vh] overflow-y-auto"
+        className="scrollbar-hide fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-32 shadow-md max-h-[90vh] overflow-y-auto"
         style={{ zIndex: 10001 }}
         role="dialog"
         aria-modal="true"

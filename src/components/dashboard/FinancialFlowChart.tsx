@@ -20,9 +20,8 @@ export interface FlowDataPoint {
   despesas: number
 }
 
-const CHART_HEIGHT = 300
 
-/** Dados mock para sete meses. No futuro substituir por agregação de transações por mês. */
+/** Dados mock para 12 meses (jan–dez). No futuro substituir por agregação de transações por mês. */
 function getMockFlowData(): FlowDataPoint[] {
   const months: { monthKey: string; monthLabel: string; monthName: string }[] = [
     { monthKey: '2025-01', monthLabel: 'Jan', monthName: 'Janeiro' },
@@ -32,9 +31,14 @@ function getMockFlowData(): FlowDataPoint[] {
     { monthKey: '2025-05', monthLabel: 'Mai', monthName: 'Maio' },
     { monthKey: '2025-06', monthLabel: 'Jun', monthName: 'Junho' },
     { monthKey: '2025-07', monthLabel: 'Jul', monthName: 'Julho' },
+    { monthKey: '2025-08', monthLabel: 'Ago', monthName: 'Agosto' },
+    { monthKey: '2025-09', monthLabel: 'Set', monthName: 'Setembro' },
+    { monthKey: '2025-10', monthLabel: 'Out', monthName: 'Outubro' },
+    { monthKey: '2025-11', monthLabel: 'Nov', monthName: 'Novembro' },
+    { monthKey: '2025-12', monthLabel: 'Dez', monthName: 'Dezembro' },
   ]
-  const receitas = [8500, 9200, 7800, 10500, 9800, 11200, 12700]
-  const despesas = [6200, 5800, 7100, 5900, 6500, 7200, 6800]
+  const receitas = [8500, 9200, 7800, 10500, 9800, 11200, 12700, 11800, 13200, 14500, 13800, 15200]
+  const despesas = [6200, 5800, 7100, 5900, 6500, 7200, 6800, 7100, 6900, 7500, 8200, 7800]
   return months.map((m, i) => ({
     ...m,
     receitas: receitas[i] ?? 0,
@@ -69,7 +73,7 @@ export function FinancialFlowChart() {
 
   return (
     <article
-      className="w-full min-w-0 rounded-shape-20 border bg-surface-500 p-figma-32 box-border"
+      className="h-full w-full min-w-0 flex flex-col rounded-shape-20 border bg-surface-500 p-figma-32 box-border"
       style={{
         borderWidth: 'var(--border-width-sm, 1px)',
         borderColor: 'var(--neutral-300)',
@@ -106,15 +110,12 @@ export function FinancialFlowChart() {
         </div>
       </div>
 
-      {/* Gráfico: fundo cinza suave, grid tracejado, áreas com gradiente */}
+      {/* Gráfico: preenche 100% do container verticalmente */}
       <div
-        className="w-full rounded-lg overflow-hidden"
-        style={{
-          height: CHART_HEIGHT,
-          backgroundColor: 'var(--gray-50)',
-        }}
+        className="min-h-[200px] w-full flex-1 rounded-lg overflow-hidden"
+        style={{ backgroundColor: 'var(--gray-50)' }}
       >
-        <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
+        <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}
             margin={{ top: 8, right: 8, left: 8, bottom: 8 }}

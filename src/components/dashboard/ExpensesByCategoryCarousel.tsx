@@ -173,11 +173,9 @@ export function ExpensesByCategoryCarousel() {
       <div
         ref={scrollRef}
         data-carousel-scroll
-        className="flex min-w-0 overflow-x-auto overflow-y-hidden scroll-smooth py-2 -mx-1 px-1"
+        className="scrollbar-hide flex min-w-0 overflow-x-auto overflow-y-hidden scroll-smooth py-[2px] -mx-1 px-1"
         style={{
           gap: 'var(--space-20)',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
           cursor: isDragging ? 'grabbing' : 'grab',
         }}
         onScroll={handleScroll}

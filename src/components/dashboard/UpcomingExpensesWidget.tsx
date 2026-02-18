@@ -105,7 +105,7 @@ export function UpcomingExpensesWidget() {
 
   return (
     <section
-      className="flex w-full min-w-0 flex-col rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-32 shadow-sm"
+      className="flex h-full w-full min-w-0 flex-col rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-32 shadow-sm min-h-0"
       style={{ gap: 'var(--space-24, 24px)' }}
       aria-label="Próximas despesas"
     >
@@ -140,7 +140,7 @@ export function UpcomingExpensesWidget() {
           </p>
         </div>
       ) : (
-        <ul className="flex flex-col gap-0" style={{ gap: 0 }}>
+        <ul className="scrollbar-hide flex min-h-0 flex-1 flex-col gap-0 overflow-y-auto overscroll-contain" style={{ gap: 0 }}>
           {pendingExpenses.map((t, index) => {
             const isRemoving = removingIds.has(t.id)
             const dueDate = t.dueDate instanceof Date ? t.dueDate : new Date(t.dueDate!)
@@ -152,7 +152,7 @@ export function UpcomingExpensesWidget() {
             return (
               <li
                 key={t.id}
-                className={`flex items-center justify-between gap-figma-16 border-neutral-200 py-figma-16 transition-opacity duration-200 ${
+                className={`flex items-center justify-between gap-figma-16 border-neutral-200 py-figma-8 transition-opacity duration-200 ${
                   index > 0 ? 'border-t border-neutral-200' : ''
                 } ${isRemoving ? 'opacity-0' : 'opacity-100'}`}
               >

@@ -8,8 +8,8 @@ import { IconChevronLeft, IconChevronRight } from './Sidebar/SidebarIcons'
 
 const SIDEBAR_WIDTH_EXPANDED = 256
 const SIDEBAR_WIDTH_COLLAPSED = 72
-/** Distância fixa entre o menu lateral e o navbar (Figma 2021-3854, 2021-3857). */
-const SIDEBAR_NAVBAR_GAP = 32
+/** Espaço entre o menu lateral e o conteúdo à direita (24px). */
+const SIDEBAR_CONTENT_GAP = 24
 
 export interface DashboardLayoutProps {
   children: ReactNode
@@ -45,7 +45,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         />
         <div
           className="flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden"
-          style={{ paddingLeft: SIDEBAR_NAVBAR_GAP }}
+          style={{ paddingLeft: SIDEBAR_CONTENT_GAP }}
         >
           <button
             type="button"
@@ -63,7 +63,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             {isExpanded ? <IconChevronLeft /> : <IconChevronRight />}
           </button>
           {/* Apenas esta área rola; sidebar permanece fixa 100vh */}
-          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
+          <div className="scrollbar-hide flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
             <MainContentWrapper sidebarWidth={0} paddingTop={0}>
               {children}
             </MainContentWrapper>
@@ -78,7 +78,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <HeaderMobile />
       <MainContentWrapper
         sidebarWidth={0}
-        sidebarNavbarGap={SIDEBAR_NAVBAR_GAP}
+        sidebarNavbarGap={SIDEBAR_CONTENT_GAP}
         paddingTop={headerTopPadding}
       >
         {children}

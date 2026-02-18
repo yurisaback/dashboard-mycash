@@ -242,9 +242,21 @@
 }
 
 @layer utilities {
-  /* Scrollbar oculta no carrossel horizontal */
+  /* Oculta barra de scroll mantendo a rolagem (componentes internos) */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  /* Compatibilidade com data-carousel-scroll (carrossel) */
   [data-carousel-scroll]::-webkit-scrollbar {
     display: none;
+  }
+  [data-carousel-scroll] {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   /* Utilitários para padding responsivo do conteúdo principal */

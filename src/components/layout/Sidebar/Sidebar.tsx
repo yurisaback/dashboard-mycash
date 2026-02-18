@@ -86,7 +86,7 @@ export function Sidebar({ isExpanded }: SidebarProps) {
           )}
         </div>
 
-        <nav className="flex-1 overflow-y-auto flex flex-col min-h-0" style={{ gap: 'var(--space-8)' }} aria-label="Menu">
+        <nav className="scrollbar-hide flex-1 overflow-y-auto flex flex-col min-h-0" style={{ gap: 'var(--space-8)' }} aria-label="Menu">
         {NAV_ITEMS.map((item) => (
           <SidebarItem
             key={item.to}
