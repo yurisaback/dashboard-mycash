@@ -4,23 +4,18 @@ import { formatCurrencyBR } from '../../utils'
 import type { CreditCard, CardTheme } from '../../types'
 import { IconPlus } from './DashboardIcons'
 import { IconCreditCard } from '../layout/Sidebar/SidebarIcons'
+import { IconChevronRight } from './DashboardIcons'
 
 const CARDS_PER_PAGE = 3
 
-/** Cores do bloco e do badge por tema (design system) */
-function getThemeStyles(theme: CardTheme): { blockBg: string; blockBorder?: string; iconColor: string; badgeBg: string; badgeText: string } {
-  switch (theme) {
-    case 'black':
-      return { blockBg: 'var(--neutral-1100)', iconColor: 'var(--neutral-0)', badgeBg: 'var(--neutral-200)', badgeText: 'var(--neutral-1100)' }
-    case 'lime':
-      return { blockBg: 'var(--primary-700)', iconColor: 'var(--neutral-0)', badgeBg: 'var(--primary-700)', badgeText: 'var(--neutral-0)' }
-    case 'white':
-      return { blockBg: 'var(--surface-500)', blockBorder: 'var(--neutral-300)', iconColor: 'var(--neutral-1100)', badgeBg: 'var(--neutral-200)', badgeText: 'var(--neutral-1100)' }
-    default:
-      return { blockBg: 'var(--neutral-1100)', iconColor: 'var(--neutral-0)', badgeBg: 'var(--neutral-200)', badgeText: 'var(--neutral-1100)' }
-  }
+const BANK_LOGO_SLUGS = ['nubank', 'inter', 'picpay'] as const
+
+function getBankLogoSrc(bankLogo?: string): string | null {
+  if (!bankLogo || !BANK_LOGO_SLUGS.includes(bankLogo as (typeof BANK_LOGO_SLUGS)[number])) return null
+  return `/assets/banks/${bankLogo}.png`
 }
 
+/** Linha de cartão no estilo Figma: flex, space-between, align-start, self-stretch. Logo à esquerda; nome, valor e vencimento no centro; **** no canto direito. */
 function CreditCardRow({
   card,
   onClick,
@@ -28,46 +23,40 @@ function CreditCardRow({
   card: CreditCard
   onClick: () => void
 }) {
-  const usagePercent = card.limit > 0 ? Math.round((card.currentBill / card.limit) * 100) : 0
-  const styles = getThemeStyles(card.theme)
+  const logoSrc = getBankLogoSrc(card.bankLogo)
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className="w-full text-left flex items-center gap-figma-16 p-figma-16 rounded-shape-20 border border-neutral-300 bg-surface-500 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-figma-500 cursor-pointer"
+      className="flex w-full flex-shrink-0 items-start justify-between gap-figma-16 rounded-shape-20 bg-surface-500 p-1 text-left transition-colors hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 cursor-pointer"
+      style={{ alignSelf: 'stretch' }}
     >
-      <div
-        className="flex-shrink-0 w-12 h-12 rounded-shape-20 flex items-center justify-center"
-        style={{
-          backgroundColor: styles.blockBg,
-          border: styles.blockBorder ? `1px solid ${styles.blockBorder}` : undefined,
-        }}
-      >
-        <span style={{ color: styles.iconColor }} className="[&_svg]:w-6 [&_svg]:h-6">
-          <IconCreditCard />
-        </span>
-      </div>
-      <div className="flex-1 min-w-0 flex flex-col gap-figma-2">
-        <p className="text-paragraph-x-small text-neutral-500 truncate">{card.name}</p>
-        <p className="text-label-medium font-semibold text-neutral-1100 tabular-nums">
-          {formatCurrencyBR(card.currentBill)}
-        </p>
-        <p className="text-paragraph-x-small text-neutral-500">
-          Vence dia {card.dueDay}
-        </p>
-        {card.lastDigits != null && (
-          <p className="text-paragraph-x-small text-neutral-500 tabular-nums">
-            •••• {card.lastDigits}
+      <div className="flex min-w-0 flex-1 items-start gap-figma-12">
+        <div className="flex h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg bg-neutral-200">
+          {logoSrc ? (
+            <img src={logoSrc} alt="" className="h-full w-full object-contain" />
+          ) : (
+            <span className="flex h-full w-full items-center justify-center text-label-medium font-semibold text-neutral-1100">
+              {card.name.charAt(0)}
+            </span>
+          )}
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col gap-figma-2">
+          <p className="text-label-medium font-semibold text-neutral-1100 truncate">{card.name}</p>
+          <p className="text-label-medium font-bold text-neutral-1100 tabular-nums">
+            {formatCurrencyBR(card.currentBill)}
           </p>
-        )}
+          <p className="text-paragraph-x-small text-neutral-500">
+            Vence dia {card.dueDay}
+          </p>
+        </div>
       </div>
-      <div
-        className="flex-shrink-0 min-w-[3rem] py-figma-4 px-figma-8 rounded-full text-paragraph-x-small font-semibold text-center"
-        style={{ backgroundColor: styles.badgeBg, color: styles.badgeText }}
-      >
-        {usagePercent}%
-      </div>
+      {card.lastDigits != null && (
+        <p className="flex-shrink-0 text-paragraph-small text-neutral-500 tabular-nums">
+          ****{card.lastDigits}
+        </p>
+      )}
     </button>
   )
 }
@@ -238,33 +227,37 @@ export function CreditCardsWidget() {
 
   return (
     <article
-      className="w-full min-w-0 rounded-shape-20 border p-figma-32 box-border"
-      style={{
-        borderWidth: 'var(--border-width-sm, 1px)',
-        borderColor: 'var(--neutral-300)',
-        backgroundColor: 'var(--gray-50)',
-      }}
-      aria-label="Cartões de crédito"
+      className="flex h-full min-w-0 w-full flex-col rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-24 box-border shadow-sm"
+      aria-label="Cards e contas"
     >
       <header className="flex items-center justify-between gap-figma-16 mb-figma-24">
         <div className="flex items-center gap-figma-8">
           <span className="text-neutral-1100 [&_svg]:w-5 [&_svg]:h-5" aria-hidden>
             <IconCreditCard />
           </span>
-          <h2 className="text-heading-x-small font-bold text-neutral-1100">Cartões</h2>
+          <h2 className="text-heading-x-small font-bold text-neutral-1100">Cards & Contas</h2>
         </div>
-        <button
-          type="button"
-          onClick={() => setAddModalOpen(true)}
-          className="flex-shrink-0 w-10 h-10 rounded-full bg-surface-500 border border-neutral-300 flex items-center justify-center text-neutral-1100 hover:bg-neutral-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
-          aria-label="Adicionar cartão"
-        >
-          <IconPlus />
-        </button>
+        <div className="flex items-center gap-figma-8">
+          <button
+            type="button"
+            onClick={() => setAddModalOpen(true)}
+            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-neutral-300 bg-surface-500 text-neutral-1100 transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
+            aria-label="Adicionar cartão"
+          >
+            <IconPlus />
+          </button>
+          <button
+            type="button"
+            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-neutral-300 bg-surface-500 text-neutral-1100 transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 [&_svg]:w-5 [&_svg]:h-5"
+            aria-label="Ver todos"
+          >
+            <IconChevronRight />
+          </button>
+        </div>
       </header>
 
       <ul
-        className="flex flex-col gap-figma-12 list-none p-0 m-0"
+        className="flex flex-col gap-figma-16 list-none p-0 m-0"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >

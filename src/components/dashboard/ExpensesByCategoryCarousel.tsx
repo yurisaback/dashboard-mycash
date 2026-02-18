@@ -39,12 +39,16 @@ export function ExpensesByCategoryCarousel() {
     el.scrollLeft += delta
   }, [])
 
-  const handleWheel = useCallback((e: React.WheelEvent) => {
+  useEffect(() => {
     const el = scrollRef.current
     if (!el) return
-    e.preventDefault()
-    el.scrollLeft += e.deltaY
-  }, [])
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      el.scrollLeft += e.deltaY
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [items.length])
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (!scrollRef.current) return
@@ -126,7 +130,7 @@ export function ExpensesByCategoryCarousel() {
   return (
     <section
       aria-label="Despesas por categoria"
-      className="relative w-full min-w-0 overflow-hidden"
+      className="relative flex h-full min-w-0 w-full items-stretch overflow-hidden"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={handleMouseLeave}
     >
@@ -173,13 +177,12 @@ export function ExpensesByCategoryCarousel() {
       <div
         ref={scrollRef}
         data-carousel-scroll
-        className="scrollbar-hide flex min-w-0 overflow-x-auto overflow-y-hidden scroll-smooth py-[2px] -mx-1 px-1"
+        className="scrollbar-hide flex min-w-0 overflow-x-auto overflow-y-hidden scroll-smooth py-2 -mx-1 px-1 touch-pan-x overscroll-x-contain overscroll-y-none"
         style={{
           gap: 'var(--space-20)',
           cursor: isDragging ? 'grabbing' : 'grab',
         }}
         onScroll={handleScroll}
-        onWheel={handleWheel}
         onMouseDown={handleMouseDown}
       >
         {items.map((item, index) => (

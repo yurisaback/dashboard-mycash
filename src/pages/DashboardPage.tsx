@@ -12,27 +12,30 @@ function DashboardPage() {
         <DashboardHeader />
       </div>
       <div className="flex flex-1 flex-col self-stretch w-full min-w-0 max-w-full overflow-x-hidden px-[2px] pt-0 pb-0 box-border">
-        {/* Grid: 24px entre cards. Resumo + Categorias à esquerda; Cartões (2 rows) à direita; depois Gráfico | Próximas despesas. */}
+        {/* Grid: 24px entre cards. Coluna esquerda: Resumo + Categorias ( mesma altura que Cards ); direita: Cartões; depois Gráfico | Próximas despesas. */}
         <div className="mt-0 grid w-full min-w-0 max-w-full grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-stretch">
-          <section
-            className="grid w-full min-w-0 grid-cols-1 gap-6 md:grid-cols-3"
-            aria-label="Resumo financeiro"
-          >
-            <div className="min-w-0 overflow-hidden">
-              <BalanceCard />
-            </div>
-            <div className="min-w-0 overflow-hidden">
-              <IncomeCard />
-            </div>
-            <div className="min-w-0 overflow-hidden">
-              <ExpenseCard />
-            </div>
-          </section>
+          {/* Wrapper: Figma — flex, align-items: center, gap: 24px, align-self: stretch. Resumo + Categorias = altura do CreditCardsWidget */}
+          <div className="flex min-h-0 w-full min-w-0 flex-col items-center self-stretch gap-6 lg:row-span-2">
+            <section
+              className="grid h-full min-h-0 flex-1 grid-cols-1 gap-6 md:grid-cols-3 w-full min-w-0"
+              aria-label="Resumo financeiro"
+            >
+              <div className="min-w-0 overflow-hidden h-full">
+                <BalanceCard />
+              </div>
+              <div className="min-w-0 overflow-hidden h-full">
+                <IncomeCard />
+              </div>
+              <div className="min-w-0 overflow-hidden h-full">
+                <ExpenseCard />
+              </div>
+            </section>
+            <section className="flex min-h-0 flex-1 w-full min-w-0" aria-label="Despesas por categoria">
+              <ExpensesByCategoryCarousel />
+            </section>
+          </div>
           <section className="w-full min-w-0 lg:row-span-2" aria-label="Cards e contas">
             <CreditCardsWidget />
-          </section>
-          <section className="w-full min-w-0" aria-label="Despesas por categoria">
-            <ExpensesByCategoryCarousel />
           </section>
           <section className="flex w-full min-w-0 flex-col lg:min-h-0" aria-label="Fluxo financeiro">
             <FinancialFlowChart />

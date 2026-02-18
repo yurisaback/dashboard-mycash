@@ -16,7 +16,8 @@ export function IncomeCard() {
 
   return (
     <article
-      className="w-full rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-24 min-h-[140px] flex flex-col shadow-sm"
+      className="w-full h-full min-h-[140px] rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-24 flex flex-col shadow-sm"
+      style={{ height: '100%' }}
       aria-label="Receitas"
     >
       <span

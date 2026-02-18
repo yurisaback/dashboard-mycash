@@ -28,10 +28,10 @@ export function CategoryDonutCard({
 
   return (
     <article
-      className="flex flex-shrink-0 flex-col items-center w-[160px] min-h-0 rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-24 box-border transition-colors duration-200 hover:border-primary-figma-700"
-      style={{ borderWidth: 'var(--border-width-sm, 1px)' }}
+      className="flex h-full min-h-0 flex-shrink-0 flex-col items-center justify-center w-[160px] rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-24 box-border transition-colors duration-200 hover:border-primary-figma-700"
+      style={{ height: '100%', borderWidth: 'var(--border-width-sm, 1px)' }}
     >
-      <div className="relative flex items-center justify-center mb-figma-12" style={{ width: DONUT_SIZE, height: DONUT_SIZE }}>
+      <div className="relative flex shrink-0 items-center justify-center mb-figma-12" style={{ width: DONUT_SIZE, height: DONUT_SIZE }}>
         <svg
           width={DONUT_SIZE}
           height={DONUT_SIZE}
@@ -61,7 +61,7 @@ export function CategoryDonutCard({
             strokeLinecap="round"
           />
         </svg>
-        <span className="relative text-paragraph-small font-semibold text-neutral-1100 tabular-nums">
+        <span className="absolute inset-0 flex items-center justify-center text-paragraph-small font-semibold text-neutral-1100 tabular-nums pointer-events-none">
           {`${safePct.toFixed(1)}%`}
         </span>
       </div>
