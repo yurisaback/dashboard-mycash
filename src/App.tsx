@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { FinanceProvider } from './contexts/FinanceContext'
+import { ToastProvider } from './contexts/ToastContext'
 import { DashboardLayout } from './components/layout/DashboardLayout'
 import DashboardPage from './pages/DashboardPage'
 import CardsPage from './pages/CardsPage'
@@ -9,6 +10,7 @@ import ProfilePage from './pages/ProfilePage'
 function App() {
   return (
     <FinanceProvider>
+      <ToastProvider>
       <BrowserRouter>
         <DashboardLayout>
           <Routes>
@@ -20,6 +22,7 @@ function App() {
           </Routes>
         </DashboardLayout>
       </BrowserRouter>
+      </ToastProvider>
     </FinanceProvider>
   )
 }

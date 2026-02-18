@@ -11,9 +11,33 @@ import {
   IconChevronLeft,
   IconChevronRight,
 } from './DashboardIcons'
+import type { Transaction } from '../../types'
 
-const PAGE_SIZE = 5
+const DEFAULT_PAGE_SIZE = 5
 const MAX_VISIBLE_PAGES = 7
+
+export type SortField = 'date' | 'value' | 'description'
+export type SortDir = 'asc' | 'desc'
+
+export interface TransactionsTableProps {
+  /** Linhas por página (dashboard: 5, página full: 10) */
+  pageSize?: number
+  /** Filtro por conta/cartão */
+  filterAccountId?: string
+  /** Filtro por categoria */
+  filterCategory?: string
+  /** Filtro por status */
+  filterStatus?: string
+  /** Usar apenas filtros do contexto (quando true, esconde busca/tipo inline) */
+  useContextFiltersOnly?: boolean
+  /** Habilitar ordenação por colunas */
+  sortable?: boolean
+  /** Mostrar botão de exportar */
+  showExport?: boolean
+  /** Callback para exportar - recebe transações filtradas */
+  onExportCSV?: (transactions: Transaction[]) => void
+  onExportPDF?: (transactions: Transaction[]) => void
+}
 
 function formatTableDate(date: Date): string {
   const d = date instanceof Date ? date : new Date(date)
@@ -40,7 +64,17 @@ function getMemberAvatar(
   return familyMembers.find((m) => m.id === memberId) ?? null
 }
 
-export function TransactionsTable() {
+export function TransactionsTable({
+  pageSize = DEFAULT_PAGE_SIZE,
+  filterAccountId,
+  filterCategory,
+  filterStatus,
+  useContextFiltersOnly = false,
+  sortable = false,
+  showExport = false,
+  onExportCSV,
+  onExportPDF,
+}: TransactionsTableProps = {}) {
   const {
     getFilteredTransactions,
     bankAccounts,
@@ -51,37 +85,71 @@ export function TransactionsTable() {
   const [localSearch, setLocalSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState<'all' | 'income' | 'expense'>('all')
   const [currentPage, setCurrentPage] = useState(1)
+  const [sortField, setSortField] = useState<SortField>('date')
+  const [sortDir, setSortDir] = useState<SortDir>('desc')
   const tableRef = useRef<HTMLDivElement>(null)
 
   const filteredAndSorted = useMemo(() => {
     const base = getFilteredTransactions()
     let list = base
-    if (typeFilter !== 'all') {
-      list = list.filter((t) => t.type === typeFilter)
+
+    if (!useContextFiltersOnly) {
+      if (typeFilter !== 'all') list = list.filter((t) => t.type === typeFilter)
+      if (localSearch.trim()) {
+        const q = localSearch.toLowerCase().trim()
+        list = list.filter(
+          (t) =>
+            t.description.toLowerCase().includes(q) ||
+            t.category.toLowerCase().includes(q)
+        )
+      }
     }
-    if (localSearch.trim()) {
-      const q = localSearch.toLowerCase().trim()
-      list = list.filter(
-        (t) =>
-          t.description.toLowerCase().includes(q) ||
-          t.category.toLowerCase().includes(q)
-      )
-    }
+
+    if (filterAccountId) list = list.filter((t) => t.accountId === filterAccountId)
+    if (filterCategory) list = list.filter((t) => t.category === filterCategory)
+    if (filterStatus && filterStatus !== 'all') list = list.filter((t) => t.status === filterStatus)
+
     return [...list].sort((a, b) => {
-      const da = a.date instanceof Date ? a.date : new Date(a.date)
-      const db = b.date instanceof Date ? b.date : new Date(b.date)
-      return db.getTime() - da.getTime()
+      let cmp = 0
+      if (sortField === 'date') {
+        const da = a.date instanceof Date ? a.date : new Date(a.date)
+        const db = b.date instanceof Date ? b.date : new Date(b.date)
+        cmp = da.getTime() - db.getTime()
+      } else if (sortField === 'value') {
+        cmp = a.value - b.value
+      } else if (sortField === 'description') {
+        cmp = a.description.localeCompare(b.description)
+      }
+      return sortDir === 'asc' ? cmp : -cmp
     })
-  }, [getFilteredTransactions, typeFilter, localSearch])
+  }, [
+    getFilteredTransactions,
+    typeFilter,
+    localSearch,
+    useContextFiltersOnly,
+    filterAccountId,
+    filterCategory,
+    filterStatus,
+    sortField,
+    sortDir,
+  ])
 
   const totalItems = filteredAndSorted.length
-  const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE))
-  const startIndex = (currentPage - 1) * PAGE_SIZE
-  const pageItems = filteredAndSorted.slice(startIndex, startIndex + PAGE_SIZE)
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize))
+  const startIndex = (currentPage - 1) * pageSize
+  const pageItems = filteredAndSorted.slice(startIndex, startIndex + pageSize)
+
+  const toggleSort = useCallback((field: SortField) => {
+    if (field === sortField) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))
+    else {
+      setSortField(field)
+      setSortDir(field === 'date' || field === 'value' ? 'desc' : 'asc')
+    }
+  }, [sortField])
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [typeFilter, localSearch])
+  }, [typeFilter, localSearch, filterAccountId, filterCategory, filterStatus])
 
   const goToPage = useCallback(
     (page: number) => {
@@ -111,7 +179,7 @@ export function TransactionsTable() {
     ]
   }, [totalPages, currentPage])
 
-  const endItem = Math.min(startIndex + PAGE_SIZE, totalItems)
+  const endItem = Math.min(startIndex + pageSize, totalItems)
   const showingText =
     totalItems === 0
       ? 'Mostrando 0 a 0 de 0'
@@ -123,7 +191,7 @@ export function TransactionsTable() {
       style={{ gap: 'var(--space-32, 32px)' }}
       aria-label="Extrato detalhado"
     >
-      {/* Header: título à esquerda; busca + select à direita */}
+      {/* Header: título à esquerda; busca + select + export à direita */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-figma-8">
           <span className="text-text-primary [&_svg]:h-6 [&_svg]:w-6" aria-hidden>
@@ -134,33 +202,59 @@ export function TransactionsTable() {
           </h2>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-figma-16">
-          <label className="relative w-full sm:w-[256px]">
-            <span className="sr-only">Buscar lançamentos</span>
-            <span className="absolute left-figma-12 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none [&_svg]:h-5 [&_svg]:w-5">
-              <IconSearch />
-            </span>
-            <input
-              type="search"
-              value={localSearch}
-              onChange={(e) => setLocalSearch(e.target.value)}
-              placeholder="Buscar lançamentos..."
-              className="w-full min-w-0 rounded-shape-20 border border-neutral-300 bg-neutral-0 py-figma-12 pl-10 pr-figma-16 text-paragraph-small text-text-primary placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
-            />
-          </label>
-          <label className="w-full sm:w-[140px]">
-            <span className="sr-only">Tipo de transação</span>
-            <select
-              value={typeFilter}
-              onChange={(e) =>
-                setTypeFilter(e.target.value as 'all' | 'income' | 'expense')
-              }
-              className="w-full min-w-0 rounded-shape-20 border border-neutral-300 bg-neutral-0 py-figma-12 pl-figma-16 pr-figma-16 text-paragraph-small text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
-            >
-              <option value="all">Todos</option>
-              <option value="income">Receitas</option>
-              <option value="expense">Despesas</option>
-            </select>
-          </label>
+          {!useContextFiltersOnly && (
+            <>
+              <label className="relative w-full sm:w-[256px]">
+                <span className="sr-only">Buscar lançamentos</span>
+                <span className="absolute left-figma-12 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none [&_svg]:h-5 [&_svg]:w-5">
+                  <IconSearch />
+                </span>
+                <input
+                  type="search"
+                  value={localSearch}
+                  onChange={(e) => setLocalSearch(e.target.value)}
+                  placeholder="Buscar lançamentos..."
+                  className="w-full min-w-0 rounded-shape-20 border border-neutral-300 bg-neutral-0 py-figma-12 pl-10 pr-figma-16 text-paragraph-small text-text-primary placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
+                />
+              </label>
+              <label className="w-full sm:w-[140px]">
+                <span className="sr-only">Tipo de transação</span>
+                <select
+                  value={typeFilter}
+                  onChange={(e) =>
+                    setTypeFilter(e.target.value as 'all' | 'income' | 'expense')
+                  }
+                  className="w-full min-w-0 rounded-shape-20 border border-neutral-300 bg-neutral-0 py-figma-12 pl-figma-16 pr-figma-16 text-paragraph-small text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
+                >
+                  <option value="all">Todos</option>
+                  <option value="income">Receitas</option>
+                  <option value="expense">Despesas</option>
+                </select>
+              </label>
+            </>
+          )}
+          {showExport && (onExportCSV || onExportPDF) && (
+            <div className="flex gap-figma-8">
+              {onExportCSV && (
+                <button
+                  type="button"
+                  onClick={() => onExportCSV(filteredAndSorted)}
+                  className="rounded-shape-20 border border-neutral-300 bg-neutral-0 px-figma-16 py-figma-12 text-paragraph-small font-medium text-neutral-1100 hover:bg-neutral-100"
+                >
+                  Exportar CSV
+                </button>
+              )}
+              {onExportPDF && (
+                <button
+                  type="button"
+                  onClick={() => onExportPDF(filteredAndSorted)}
+                  className="rounded-shape-20 border border-neutral-300 bg-neutral-0 px-figma-16 py-figma-12 text-paragraph-small font-medium text-neutral-1100 hover:bg-neutral-100"
+                >
+                  Exportar PDF
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -177,15 +271,37 @@ export function TransactionsTable() {
               </th>
               <th
                 scope="col"
-                className="py-figma-12 pl-figma-8 pr-figma-8 text-paragraph-x-small font-semibold text-text-primary"
+                className={`py-figma-12 pl-figma-8 pr-figma-8 text-paragraph-x-small font-semibold text-text-primary ${
+                  sortable ? 'cursor-pointer select-none hover:bg-neutral-300/60' : ''
+                }`}
+                onClick={sortable ? () => toggleSort('date') : undefined}
+                role={sortable ? 'button' : undefined}
               >
-                Datas
+                <span className="inline-flex items-center gap-1">
+                  Data
+                  {sortable && sortField === 'date' && (
+                    <span className="text-neutral-500" aria-hidden>
+                      {sortDir === 'asc' ? '↑' : '↓'}
+                    </span>
+                  )}
+                </span>
               </th>
               <th
                 scope="col"
-                className="py-figma-12 pl-figma-8 pr-figma-8 text-paragraph-x-small font-semibold text-text-primary"
+                className={`py-figma-12 pl-figma-8 pr-figma-8 text-paragraph-x-small font-semibold text-text-primary ${
+                  sortable ? 'cursor-pointer select-none hover:bg-neutral-300/60' : ''
+                }`}
+                onClick={sortable ? () => toggleSort('description') : undefined}
+                role={sortable ? 'button' : undefined}
               >
-                Descrição
+                <span className="inline-flex items-center gap-1">
+                  Descrição
+                  {sortable && sortField === 'description' && (
+                    <span className="text-neutral-500" aria-hidden>
+                      {sortDir === 'asc' ? '↑' : '↓'}
+                    </span>
+                  )}
+                </span>
               </th>
               <th
                 scope="col"
@@ -207,9 +323,20 @@ export function TransactionsTable() {
               </th>
               <th
                 scope="col"
-                className="py-figma-12 pr-figma-16 pl-figma-8 text-right text-paragraph-x-small font-semibold text-text-primary"
+                className={`py-figma-12 pr-figma-16 pl-figma-8 text-right text-paragraph-x-small font-semibold text-text-primary ${
+                  sortable ? 'cursor-pointer select-none hover:bg-neutral-300/60' : ''
+                }`}
+                onClick={sortable ? () => toggleSort('value') : undefined}
+                role={sortable ? 'button' : undefined}
               >
-                Valor
+                <span className="inline-flex items-center justify-end gap-1">
+                  Valor
+                  {sortable && sortField === 'value' && (
+                    <span className="text-neutral-500" aria-hidden>
+                      {sortDir === 'asc' ? '↑' : '↓'}
+                    </span>
+                  )}
+                </span>
               </th>
             </tr>
           </thead>

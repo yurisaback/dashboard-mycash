@@ -3,7 +3,8 @@ import { useFinance } from '../../hooks/useFinance'
 import { useIsDesktop1024 } from '../../hooks/useMediaQuery'
 import { IconSearch, IconFilter, IconPlus } from './DashboardIcons'
 import { FilterPopover } from './FilterPopover'
-import { FilterModal } from './FilterModal'
+import { FiltersMobileModal } from '../modals'
+import { NewTransactionModal } from '../modals'
 import { DateRangePicker } from './DateRangePicker'
 import { FamilyMembersWidget } from './FamilyMembersWidget'
 
@@ -15,6 +16,7 @@ export function DashboardHeader() {
   const { searchText, setSearchText } = useFinance()
   const [filterPopoverOpen, setFilterPopoverOpen] = useState(false)
   const [filterModalOpen, setFilterModalOpen] = useState(false)
+  const [transactionModalOpen, setTransactionModalOpen] = useState(false)
   const filterButtonRef = useRef<HTMLButtonElement>(null)
   const isDesktop = useIsDesktop1024()
 
@@ -88,6 +90,7 @@ export function DashboardHeader() {
       <div className="mt-figma-16 flex-shrink-0 md:mt-0 md:flex md:justify-start md:items-start">
         <button
           type="button"
+          onClick={() => setTransactionModalOpen(true)}
           className="flex items-center justify-center gap-figma-8 w-full md:w-auto px-figma-24 py-figma-16 md:py-figma-12 rounded-shape-20 bg-secondary-figma-900 text-neutral-0 text-label-medium font-semibold hover:opacity-90 transition-opacity min-h-[48px] md:min-h-[44px] focus:outline-none focus:ring-2 focus:ring-primary-figma-500 focus:ring-offset-2 whitespace-nowrap"
         >
           <IconPlus />
@@ -96,11 +99,15 @@ export function DashboardHeader() {
       </div>
 
       {!isDesktop && (
-        <FilterModal
+        <FiltersMobileModal
           isOpen={filterModalOpen}
           onClose={() => setFilterModalOpen(false)}
         />
       )}
+      <NewTransactionModal
+        isOpen={transactionModalOpen}
+        onClose={() => setTransactionModalOpen(false)}
+      />
     </header>
   )
 }

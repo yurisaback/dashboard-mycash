@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useFinance } from '../../hooks/useFinance'
 import { IconPlus, IconCheck } from './DashboardIcons'
+import { AddMemberModal } from '../modals'
 
 /**
  * Widget de membros da família — avatares sobrepostos, filtro por membro.
@@ -66,34 +67,10 @@ export function FamilyMembersWidget() {
       >
         <IconPlus />
       </button>
-      {showAddModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-secondary-figma-900/50"
-          onClick={() => setShowAddModal(false)}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => e.key === 'Escape' && setShowAddModal(false)}
-        >
-          <div
-            className="bg-surface-500 p-figma-24 rounded-shape-20 shadow-md max-w-md w-full mx-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <p className="text-label-medium font-semibold text-secondary-figma-900 mb-figma-16">
-              Adicionar membro
-            </p>
-            <p className="text-paragraph-small text-neutral-500 mb-figma-16">
-              Modal de adicionar membro será implementado no Prompt 13.
-            </p>
-            <button
-              type="button"
-              onClick={() => setShowAddModal(false)}
-              className="px-figma-16 py-figma-12 rounded-shape-100 bg-secondary-figma-900 text-neutral-0 text-paragraph-small font-semibold"
-            >
-              Fechar
-            </button>
-          </div>
-        </div>
-      )}
+      <AddMemberModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+      />
     </div>
   )
 }

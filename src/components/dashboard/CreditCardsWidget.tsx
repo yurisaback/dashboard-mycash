@@ -1,10 +1,12 @@
 import { useState, useCallback, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useFinance } from '../../hooks/useFinance'
 import { formatCurrencyBR } from '../../utils'
 import type { CreditCard, CardTheme } from '../../types'
 import { IconPlus } from './DashboardIcons'
 import { IconCreditCard } from '../layout/Sidebar/SidebarIcons'
 import { IconChevronRight } from './DashboardIcons'
+import { CardDetailsModal, AddAccountCardModal, NewTransactionModal } from '../modals'
 
 const CARDS_PER_PAGE = 3
 
@@ -203,9 +205,11 @@ export function CreditCardAddModal({ isOpen, onClose }: CreditCardAddModalProps)
 }
 
 export function CreditCardsWidget() {
+  const navigate = useNavigate()
   const { creditCards } = useFinance()
   const [detailCard, setDetailCard] = useState<CreditCard | null>(null)
   const [addModalOpen, setAddModalOpen] = useState(false)
+  const [transactionModalAccountId, setTransactionModalAccountId] = useState<string | null>(null)
   const [page, setPage] = useState(0)
 
   const totalPages = Math.max(1, Math.ceil(creditCards.length / CARDS_PER_PAGE))
@@ -248,6 +252,7 @@ export function CreditCardsWidget() {
           </button>
           <button
             type="button"
+            onClick={() => navigate('/cards')}
             className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-neutral-300 bg-surface-500 text-neutral-1100 transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 [&_svg]:w-5 [&_svg]:h-5"
             aria-label="Ver todos"
           >
@@ -292,8 +297,26 @@ export function CreditCardsWidget() {
         </div>
       )}
 
-      <CreditCardDetailModal card={detailCard} onClose={() => setDetailCard(null)} />
-      <CreditCardAddModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} />
+      <CardDetailsModal
+        card={detailCard}
+        onClose={() => setDetailCard(null)}
+        onAddExpense={(id) => {
+          setDetailCard(null)
+          setTransactionModalAccountId(id)
+        }}
+      />
+      <AddAccountCardModal
+        isOpen={addModalOpen}
+        onClose={() => setAddModalOpen(false)}
+        initialMode="card"
+      />
+      {transactionModalAccountId && (
+        <NewTransactionModal
+          isOpen
+          onClose={() => setTransactionModalAccountId(null)}
+          preselectedAccountId={transactionModalAccountId}
+        />
+      )}
     </article>
   )
 }
