@@ -224,7 +224,7 @@ export function TransactionsTable({
                   onChange={(e) =>
                     setTypeFilter(e.target.value as 'all' | 'income' | 'expense')
                   }
-                  className="w-full min-w-0 rounded-shape-20 border border-neutral-300 bg-neutral-0 py-figma-12 pl-figma-16 pr-figma-16 text-paragraph-small text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
+                  className="select-custom w-full min-w-0 rounded-shape-20 border border-neutral-300 bg-neutral-0 py-figma-12 pl-figma-16 text-paragraph-small text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
                 >
                   <option value="all">Todos</option>
                   <option value="income">Receitas</option>
@@ -259,7 +259,7 @@ export function TransactionsTable({
       </div>
 
       {/* Tabela */}
-      <div ref={tableRef} className="scrollbar-hide w-full min-w-0 overflow-x-auto rounded-shape-20 border border-neutral-300">
+      <div ref={tableRef} className="w-full min-w-0 overflow-x-auto rounded-shape-20 border border-neutral-300 md:scrollbar-hide">
         <table className="w-full min-w-[600px] border-collapse text-left">
           <thead>
             <tr className="bg-neutral-200">

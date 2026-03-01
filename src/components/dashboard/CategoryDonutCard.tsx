@@ -28,8 +28,8 @@ export function CategoryDonutCard({
 
   return (
     <article
-      className="flex h-full min-h-0 flex-shrink-0 flex-col items-center justify-center w-[160px] rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-24 box-border transition-colors duration-200 hover:border-primary-figma-700"
-      style={{ height: '100%', borderWidth: 'var(--border-width-sm, 1px)' }}
+      className="flex flex-shrink-0 flex-col items-center justify-center w-[160px] rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-24 box-border transition-colors duration-200 hover:border-primary-figma-700"
+      style={{ borderWidth: 'var(--border-width-sm, 1px)' }}
     >
       <div className="relative flex shrink-0 items-center justify-center mb-figma-12" style={{ width: DONUT_SIZE, height: DONUT_SIZE }}>
         <svg

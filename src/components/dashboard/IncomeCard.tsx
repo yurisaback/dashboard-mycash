@@ -16,7 +16,7 @@ export function IncomeCard() {
 
   return (
     <article
-      className="w-full h-full min-h-[140px] rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-24 flex flex-col shadow-sm"
+      className="w-full h-full min-h-[180px] md:min-h-[160px] rounded-shape-20 border border-neutral-300 bg-surface-500 p-figma-24 flex flex-col shadow-sm"
       style={{ height: '100%' }}
       aria-label="Receitas"
     >
@@ -29,7 +29,7 @@ export function IncomeCard() {
       <p className="text-paragraph-small text-neutral-1100 mb-figma-4">
         Receitas
       </p>
-      <p className="text-[28px] font-bold leading-9 text-neutral-1100 tabular-nums">
+      <p className="text-[28px] font-bold leading-9 text-neutral-1100 tabular-nums break-words min-h-9">
         {formatCurrencyBR(displayValue)}
       </p>
     </article>

@@ -204,7 +204,7 @@ export function AddAccountCardModal({
             <select
               value={holderId}
               onChange={(e) => setHolderId(e.target.value)}
-              className={`w-full h-14 rounded-shape-20 border bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 ${
+              className={`select-custom w-full h-14 rounded-shape-20 border bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 ${
                 errors.holderId ? 'border-red-500' : 'border-neutral-300'
               }`}
             >
@@ -223,7 +223,7 @@ export function AddAccountCardModal({
                   <select
                     value={accountType}
                     onChange={(e) => setAccountType(e.target.value as 'checking' | 'savings' | 'investment')}
-                    className="w-full h-14 rounded-shape-20 border border-neutral-300 bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100"
+                    className="select-custom w-full h-14 rounded-shape-20 border border-neutral-300 bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100"
                   >
                     <option value="checking">Conta corrente</option>
                     <option value="savings">Poupança</option>

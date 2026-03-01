@@ -130,7 +130,7 @@ export function ExpensesByCategoryCarousel() {
   return (
     <section
       aria-label="Despesas por categoria"
-      className="relative flex h-full min-w-0 w-full items-stretch overflow-hidden"
+      className="relative flex min-w-0 w-full items-stretch overflow-hidden"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={handleMouseLeave}
     >

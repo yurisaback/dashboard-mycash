@@ -161,7 +161,7 @@ export function CreditCardAddModal({ isOpen, onClose }: CreditCardAddModalProps)
           </label>
           <label className="block">
             <span className="text-paragraph-small text-neutral-500 block mb-figma-4">Titular</span>
-            <select value={holderId} onChange={(e) => setHolderId(e.target.value)} className="w-full rounded-shape-20 border border-neutral-300 px-figma-12 py-figma-8 text-paragraph-small text-neutral-1100">
+            <select value={holderId} onChange={(e) => setHolderId(e.target.value)} className="select-custom w-full rounded-shape-20 border border-neutral-300 px-figma-12 py-figma-8 text-paragraph-small text-neutral-1100">
               {familyMembers.map((m) => (
                 <option key={m.id} value={m.id}>{m.name}</option>
               ))}
@@ -191,7 +191,7 @@ export function CreditCardAddModal({ isOpen, onClose }: CreditCardAddModalProps)
           </label>
           <label className="block">
             <span className="text-paragraph-small text-neutral-500 block mb-figma-4">Tema</span>
-            <select value={theme} onChange={(e) => setTheme(e.target.value as CardTheme)} className="w-full rounded-shape-20 border border-neutral-300 px-figma-12 py-figma-8 text-paragraph-small text-neutral-1100">
+            <select value={theme} onChange={(e) => setTheme(e.target.value as CardTheme)} className="select-custom w-full rounded-shape-20 border border-neutral-300 px-figma-12 py-figma-8 text-paragraph-small text-neutral-1100">
               <option value="black">Preto</option>
               <option value="lime">Verde-limão</option>
               <option value="white">Branco</option>
@@ -239,7 +239,7 @@ export function CreditCardsWidget() {
           <span className="text-neutral-1100 [&_svg]:w-5 [&_svg]:h-5" aria-hidden>
             <IconCreditCard />
           </span>
-          <h2 className="text-heading-x-small font-bold text-neutral-1100">Cards & Contas</h2>
+          <h2 className="text-heading-x-small font-bold text-neutral-1100">Cartões & Contas</h2>
         </div>
         <div className="flex items-center gap-figma-8">
           <button

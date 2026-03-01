@@ -309,7 +309,7 @@ export function NewTransactionModal({
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className={`w-full h-14 rounded-shape-20 border bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 ${
+                  className={`select-custom w-full h-14 rounded-shape-20 border bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 ${
                     errors.category ? 'border-red-500' : 'border-neutral-300'
                   }`}
                 >
@@ -329,7 +329,7 @@ export function NewTransactionModal({
                 <select
                   value={memberId ?? ''}
                   onChange={(e) => setMemberId(e.target.value || null)}
-                  className="w-full h-14 rounded-shape-20 border border-neutral-300 bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
+                  className="select-custom w-full h-14 rounded-shape-20 border border-neutral-300 bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500"
                 >
                   <option value="">Família (Geral)</option>
                   {familyMembers.map((m) => (
@@ -342,7 +342,7 @@ export function NewTransactionModal({
                 <select
                   value={accountId}
                   onChange={(e) => setAccountId(e.target.value)}
-                  className={`w-full h-14 rounded-shape-20 border bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 ${
+                  className={`select-custom w-full h-14 rounded-shape-20 border bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 ${
                     errors.accountId ? 'border-red-500' : 'border-neutral-300'
                   }`}
                 >
@@ -371,7 +371,7 @@ export function NewTransactionModal({
                     value={installments}
                     onChange={(e) => setInstallments(parseInt(e.target.value, 10))}
                     disabled={isRecurring}
-                    className="w-full h-14 rounded-shape-20 border border-neutral-300 bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 disabled:opacity-60"
+                    className="select-custom w-full h-14 rounded-shape-20 border border-neutral-300 bg-neutral-0 px-figma-16 text-paragraph-small text-neutral-1100 focus:outline-none focus:ring-2 focus:ring-primary-figma-500 disabled:opacity-60"
                   >
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => (
                       <option key={n} value={n}>
